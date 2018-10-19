@@ -7,12 +7,78 @@ namespace SecretNest.TeamPlayer
 {
     public partial class Facade
     {
-        public Game GetGame(int roundIndex, int gameIndex)
+        //public Game GetGame(int roundIndex, int gameIndex)
+        //{
+        //    return dataFile.Games[roundIndex][gameIndex];
+        //}
+
+        public List<GameWithIndex> GetGamesByRound(int roundIndex)
         {
-            return dataFile.Games[roundIndex][gameIndex];
+            if (dataFile.Games == null)
+            {
+                return null;
+            }
+            else
+            {
+                List<GameWithIndex> results = new List<GameWithIndex>();
+                var round = dataFile.Games[roundIndex];
+                for (int gameIndex = 0; gameIndex < round.Count; gameIndex++)
+                {
+                    var game = round[gameIndex];
+                    if (game.GameResult != GameResult.NotStarted)
+                    {
+                        var gameWithIndex = new GameWithIndex();
+                        gameWithIndex.GameResult = game.GameResult;
+                        gameWithIndex.GameTime = game.GameTime;
+                        gameWithIndex.IsTimeIncluded = game.IsTimeIncluded;
+                        gameWithIndex.MapId = game.MapId;
+                        gameWithIndex.RaceId = game.RaceId;
+                        gameWithIndex.PlayerId = game.PlayerId;
+                        gameWithIndex.RoundIndex = roundIndex;
+                        gameWithIndex.GameIndex = gameIndex;
+                        results.Add(gameWithIndex);
+                    }
+                }
+                return results;
+            }
         }
 
-        public List<GameWithIndex> GetGames(GameResult gameResult)
+        public List<GameWithIndex> GetGamesByPlayer(TeamSelection teamSelection, Guid playerId)
+        {
+            if (dataFile.Games == null)
+            {
+                return null;
+            }
+            else
+            {
+                List<GameWithIndex> results = new List<GameWithIndex>();
+                for (int roundIndex = 0; roundIndex < dataFile.Games.Count; roundIndex++)
+                {
+                    var round = dataFile.Games[roundIndex];
+                    for (int gameIndex = 0; gameIndex < round.Count; gameIndex++)
+                    {
+                        var game = round[gameIndex];
+                        if (game.PlayerId[teamSelection] == playerId)
+                        {
+                            var gameWithIndex = new GameWithIndex();
+                            gameWithIndex.GameResult = game.GameResult;
+                            gameWithIndex.GameTime = game.GameTime;
+                            gameWithIndex.IsTimeIncluded = game.IsTimeIncluded;
+                            gameWithIndex.MapId = game.MapId;
+                            gameWithIndex.RaceId = game.RaceId;
+                            gameWithIndex.PlayerId = game.PlayerId;
+                            gameWithIndex.RoundIndex = roundIndex;
+                            gameWithIndex.GameIndex = gameIndex;
+                            results.Add(gameWithIndex);
+                        }
+                    }
+                }
+
+                return results;
+            }
+        }
+
+        public List<GameWithIndex> GetGamesByResult(GameResult gameResult)
         {
             if (dataFile.Games == null)
             {
@@ -49,7 +115,7 @@ namespace SecretNest.TeamPlayer
 
         public List<GameWithIndex> GetFinishedGames()
         {
-            return GetGames(GameResult.Finished);
+            return GetGamesByResult(GameResult.Finished);
         }
 
         public GameWithIndex GetLatestFinishedGame()
@@ -95,7 +161,7 @@ namespace SecretNest.TeamPlayer
         public void GetGameForDisplaying(out GameWithIndex latestFinishedGame, out List<GameWithIndex> playingGames)
         {
             latestFinishedGame = GetLatestFinishedGame();
-            playingGames = GetGames(GameResult.InGame);
+            playingGames = GetGamesByResult(GameResult.InGame);
         }
 
         public void SetGame(int roundIndex, int gameIndex, Game game)

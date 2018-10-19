@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace SecretNest.TeamPlayer
 {
@@ -69,14 +70,14 @@ namespace SecretNest.TeamPlayer
                 }
             }
 
-            result.Players = new List<PlayerWithGameCount>(players.Values);
+            var notOrderedPlayers = new List<PlayerWithGameCount>(players.Values);
 
             foreach (var round in result.Rounds)
             {
                 result.CurrentSource[TeamSelection.Team1] += round.Score[TeamSelection.Team1];
                 result.CurrentSource[TeamSelection.Team2] += round.Score[TeamSelection.Team2];
             }
-            foreach (var player in result.Players)
+            foreach (var player in notOrderedPlayers)
             {
                 if (player.MaxAttending == 0) continue;
                 var pass = player.Played - player.MaxAttending;
@@ -88,7 +89,7 @@ namespace SecretNest.TeamPlayer
             }
             result.GuaranteedSource.Add(TeamSelection.Team1, result.CurrentSource[TeamSelection.Team1]);
             result.GuaranteedSource.Add(TeamSelection.Team2, result.CurrentSource[TeamSelection.Team2]);
-            foreach (var player in result.Players)
+            foreach (var player in notOrderedPlayers)
             {
                 if (player.MinAttending == 0) continue;
                 var pass = player.MinAttending - player.Played;
@@ -105,6 +106,7 @@ namespace SecretNest.TeamPlayer
                 result.GuaranteedSource = null;
             }
 
+            result.Players = notOrderedPlayers.OrderBy(i => i.Team).ThenByDescending(i => i.Played).ThenByDescending(i => i.Won).ToList();
             return result;
         }
 

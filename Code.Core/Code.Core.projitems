@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>915932fe-a6f2-4deb-a8cd-c8d7f870bed4</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SecretNest.TeamPlayer</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Entity\Basis.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entity\DataFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entity\Game.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entity\GameWithIndex.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entity\Player.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entity\Race.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entity\Map.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entity\Team.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Facade.Basis.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Facade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Facade.Game.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Facade.Team.cs" />
+  </ItemGroup>
+</Project>

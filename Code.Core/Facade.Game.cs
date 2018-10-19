@@ -7,10 +7,10 @@ namespace SecretNest.TeamPlayer
 {
     public partial class Facade
     {
-        //public Game GetGame(int roundIndex, int gameIndex)
-        //{
-        //    return dataFile.Games[roundIndex][gameIndex];
-        //}
+        public Game GetGame(int roundIndex, int gameIndex)
+        {
+            return dataFile.Games[roundIndex][gameIndex];
+        }
 
         public List<GameWithIndex> GetGamesByRound(int roundIndex)
         {

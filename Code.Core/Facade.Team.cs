@@ -7,56 +7,30 @@ namespace SecretNest.TeamPlayer
 {
     public partial class Facade
     {
-        public Team GetTeam(int number)
+        public Team GetTeam(TeamSelection teamSelection)
         {
-            if (number == 1)
-                return dataFile.Team1;
-            else if (number == 2)
-                return dataFile.Team2;
-            else
-                throw new NotSupportedException();
+            return dataFile.Teams[teamSelection];
         }
 
-        public string GetTeamName(int number)
+        public string GetTeamName(TeamSelection teamSelection)
         {
-            if (number == 1)
-                return dataFile.Team1.Name;
-            else if (number == 2)
-                return dataFile.Team2.Name;
-            else
-                throw new NotSupportedException();
+            return dataFile.Teams[teamSelection].Name;
         }
 
-        public Player GetPlayer(int number, Guid playerId)
+        public Player GetPlayer(TeamSelection teamSelection, Guid playerId)
         {
-            if (number == 1)
-                return dataFile.Team1.Players[playerId];
-            else if (number == 2)
-                return dataFile.Team2.Players[playerId];
-            else
-                throw new NotSupportedException();
+            return dataFile.Teams[teamSelection].Players[playerId];
         }
 
-        public void SetTeamName(int number, string name)
+        public void SetTeamName(TeamSelection teamSelection, string name)
         {
-            if (number == 1)
-                dataFile.Team1.Name = name;
-            else if (number == 2)
-                dataFile.Team2.Name = name;
-            else
-                throw new NotSupportedException();
+            dataFile.Teams[teamSelection].Name = name;
             Save();
         }
 
-        public bool SetTeamPlayers(int number, Dictionary<Guid, Player> players, out string errorText)
+        public bool SetTeamPlayers(TeamSelection teamSelection, Dictionary<Guid, Player> players, out string errorText)
         {
-            Team selectedTeam;
-            if (number == 1)
-                selectedTeam = dataFile.Team1;
-            else if (number == 2)
-                selectedTeam = dataFile.Team2;
-            else
-                throw new NotSupportedException();
+            Team selectedTeam = dataFile.Teams[teamSelection];
 
             if (dataFile.Basis.RoundCount > 0 && dataFile.Basis.GameCount > 0)
             {
@@ -68,7 +42,7 @@ namespace SecretNest.TeamPlayer
                         {
                             foreach(var game in round)
                             {
-                                if ((number == 1 && game.Team1PlayerId == existed) || (number == 2 && game.Team2PlayerId == existed))
+                                if (game.PlayerId[teamSelection] == existed)
                                 {
                                     errorText = "已参与比赛的选手不允许删除。";
                                     return false;

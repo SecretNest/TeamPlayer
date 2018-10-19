@@ -67,6 +67,12 @@ namespace SecretNest.TeamPlayer
                 for (int g = 0; g < game; g++)
                 {
                     var oneGame = new Game();
+                    oneGame.PlayerId = new Dictionary<TeamSelection, Guid>();
+                    oneGame.PlayerId.Add(TeamSelection.Team1, Guid.Empty);
+                    oneGame.PlayerId.Add(TeamSelection.Team2, Guid.Empty);
+                    oneGame.RaceId = new Dictionary<TeamSelection, Guid>();
+                    oneGame.RaceId.Add(TeamSelection.Team1, Guid.Empty);
+                    oneGame.RaceId.Add(TeamSelection.Team2, Guid.Empty);
                     oneGame.GameResult = GameResult.NotStarted;
                     oneGame.GameTime = DateTime.MinValue;
                     oneRound.Add(oneGame);
@@ -108,7 +114,7 @@ namespace SecretNest.TeamPlayer
                         {
                             foreach (var game in round)
                             {
-                                if (game.Player1RaceId == existed || game.Player2RaceId == existed)
+                                if (game.RaceId[TeamSelection.Team1] == existed || game.RaceId[TeamSelection.Team2] == existed)
                                 {
                                     errorText = "已在比赛中使用的种族不允许删除。";
                                     return false;
@@ -116,7 +122,7 @@ namespace SecretNest.TeamPlayer
                             }
                         }
                     }
-                    foreach (var player in dataFile.Team1.Players.Values)
+                    foreach (var player in dataFile.Teams[TeamSelection.Team1].Players.Values)
                     {
                         if (existed == player.DefaultRace)
                         {
@@ -124,7 +130,7 @@ namespace SecretNest.TeamPlayer
                             return false;
                         }
                     }
-                    foreach (var player in dataFile.Team2.Players.Values)
+                    foreach (var player in dataFile.Teams[TeamSelection.Team2].Players.Values)
                     {
                         if (existed == player.DefaultRace)
                         {

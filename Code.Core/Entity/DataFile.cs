@@ -10,8 +10,7 @@ namespace SecretNest.TeamPlayer.Entity
         public Basis Basis { get; set; }
 
         //队伍信息
-        public Team Team1 { get; set; }
-        public Team Team2 { get; set; }
+        public Dictionary<TeamSelection, Team> Teams { get; set; }
         
         public List<List<Game>> Games { get; set; }
     }

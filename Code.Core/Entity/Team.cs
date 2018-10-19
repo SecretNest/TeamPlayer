@@ -12,4 +12,10 @@ namespace SecretNest.TeamPlayer.Entity
         //队员
         public Dictionary<Guid, Player> Players { get; set; }
     }
+
+    public enum TeamSelection
+    {
+        Team1,
+        Team2
+    }
 }

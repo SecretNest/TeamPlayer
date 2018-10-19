@@ -12,43 +12,6 @@ namespace SecretNest.TeamPlayer
             return dataFile.Games[roundIndex][gameIndex];
         }
 
-        public List<GameWithIndex> GetGames(params GameResult[] gameResults)
-        {
-            if (dataFile.Games == null)
-            {
-                return null;
-            }
-            else
-            {
-                List<GameWithIndex> results = new List<GameWithIndex>();
-                for (int roundIndex = 0; roundIndex < dataFile.Games.Count; roundIndex++)
-                {
-                    var round = dataFile.Games[roundIndex];
-                    for (int gameIndex = 0; gameIndex < round.Count; gameIndex++)
-                    {
-                        var game = round[gameIndex];
-                        if (Array.IndexOf(gameResults, game.GameResult) != -1)
-                        {
-                            var gameWithIndex = new GameWithIndex();
-                            gameWithIndex.GameResult = game.GameResult;
-                            gameWithIndex.GameTime = game.GameTime;
-                            gameWithIndex.IsTimeIncluded = game.IsTimeIncluded;
-                            gameWithIndex.MapId = game.MapId;
-                            gameWithIndex.Player1RaceId = game.Player1RaceId;
-                            gameWithIndex.Player2RaceId = game.Player2RaceId;
-                            gameWithIndex.Team1PlayerId = game.Team1PlayerId;
-                            gameWithIndex.Team2PlayerId = game.Team2PlayerId;
-                            gameWithIndex.RoundIndex = roundIndex;
-                            gameWithIndex.GameIndex = gameIndex;
-                            results.Add(gameWithIndex);
-                        }
-                    }
-                }
-
-                return results;
-            }
-        }
-
         public List<GameWithIndex> GetGames(GameResult gameResult)
         {
             if (dataFile.Games == null)
@@ -71,10 +34,8 @@ namespace SecretNest.TeamPlayer
                             gameWithIndex.GameTime = game.GameTime;
                             gameWithIndex.IsTimeIncluded = game.IsTimeIncluded;
                             gameWithIndex.MapId = game.MapId;
-                            gameWithIndex.Player1RaceId = game.Player1RaceId;
-                            gameWithIndex.Player2RaceId = game.Player2RaceId;
-                            gameWithIndex.Team1PlayerId = game.Team1PlayerId;
-                            gameWithIndex.Team2PlayerId = game.Team2PlayerId;
+                            gameWithIndex.RaceId = game.RaceId;
+                            gameWithIndex.PlayerId = game.PlayerId;
                             gameWithIndex.RoundIndex = roundIndex;
                             gameWithIndex.GameIndex = gameIndex;
                             results.Add(gameWithIndex);
@@ -88,7 +49,7 @@ namespace SecretNest.TeamPlayer
 
         public List<GameWithIndex> GetFinishedGames()
         {
-            return GetGames(GameResult.Team1Won, GameResult.Team2Won);
+            return GetGames(GameResult.Finished);
         }
 
         public GameWithIndex GetLatestFinishedGame()

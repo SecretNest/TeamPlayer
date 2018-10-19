@@ -14,12 +14,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entity\Game.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entity\GameWithIndex.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entity\Player.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entity\PlayerWithGameCount.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entity\Race.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entity\Map.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entity\Score.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entity\Team.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Facade.Basis.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Facade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Facade.Game.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Facade.Score.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Facade.Team.cs" />
   </ItemGroup>
 </Project>

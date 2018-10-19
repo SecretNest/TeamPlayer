@@ -164,14 +164,46 @@ namespace SecretNest.TeamPlayer
             playingGames = GetGamesByResult(GameResult.InGame);
         }
 
-        public void SetGame(int roundIndex, int gameIndex, Game game)
+        public bool SetGame(int roundIndex, int gameIndex, Game game, out string errorText)
         {
             if (game.GameTime != DateTime.MinValue && !game.IsTimeIncluded && game.GameTime.TimeOfDay != TimeSpan.Zero)
             {
                 game.GameTime -= game.GameTime.TimeOfDay;
             }
+
+            var round = dataFile.Games[roundIndex];
+
+            var player = game.PlayerId[TeamSelection.Team1];
+            if (player != Guid.Empty)
+            {
+                for (int g = 0; g < dataFile.Basis.GameCount; g++)
+                {
+                    if (g == gameIndex) continue;
+                    if (round[g].PlayerId[TeamSelection.Team1] == player)
+                    {
+                        errorText = "队伍1选手在本轮已经参加过比赛。";
+                        return false;
+                    }
+                }
+            }
+            player = game.PlayerId[TeamSelection.Team2];
+            if (player != Guid.Empty)
+            {
+                for (int g = 0; g < dataFile.Basis.GameCount; g++)
+                {
+                    if (g == gameIndex) continue;
+                    if (round[g].PlayerId[TeamSelection.Team2] == player)
+                    {
+                        errorText = "队伍2选手在本轮已经参加过比赛。";
+                        return false;
+                    }
+                }
+            }
+
             dataFile.Games[roundIndex][gameIndex] = game;
             Save();
+            errorText = null;
+            return true;
         }
     }
 }

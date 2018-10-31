@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,7 +29,7 @@ namespace WebApp
 		/// </summary>
 		private IConfiguration Configuration { get; }
 
-		
+
 		/// <summary>
 		/// 配置应用程序服务。
 		/// </summary>
@@ -50,6 +46,21 @@ namespace WebApp
 
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+			services.AddAuthentication(IdentityConstants.ApplicationScheme)
+				.AddCookie(IdentityConstants.ApplicationScheme, options =>
+					{
+						options.LoginPath = new PathString("/Account/LogOn");
+						options.LogoutPath = new PathString("/Account/LogOff");
+						options.AccessDeniedPath = new PathString("/Home/AccessDenied");
+
+						options.Cookie.HttpOnly = true;
+						options.Cookie.SameSite = SameSiteMode.Lax;
+						options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+					});
+
+			// 设置
+			services.Configure<AppSetting>(Configuration.GetSection("AppSetting"));
 		}
 
 		/// <summary>
@@ -74,6 +85,7 @@ namespace WebApp
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
 
+			app.UseAuthentication();
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute(

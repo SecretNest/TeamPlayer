@@ -20,23 +20,25 @@ namespace SecretNest.TeamPlayer
             }
             else
             {
-                List<GameWithIndex> results = new List<GameWithIndex>();
+                var results = new List<GameWithIndex>();
                 var round = dataFile.Games[roundIndex];
-                for (int gameIndex = 0; gameIndex < round.Count; gameIndex++)
+                for (var gameIndex = 0; gameIndex < round.Count; gameIndex++)
                 {
                     var game = round[gameIndex];
                     if (game.GameResult != GameResult.NotStarted)
                     {
-                        var gameWithIndex = new GameWithIndex();
-                        gameWithIndex.GameResult = game.GameResult;
-                        gameWithIndex.GameTime = game.GameTime;
-                        gameWithIndex.IsTimeIncluded = game.IsTimeIncluded;
-                        gameWithIndex.MapId = game.MapId;
-                        gameWithIndex.RaceId = game.RaceId;
-                        gameWithIndex.PlayerId = game.PlayerId;
-                        gameWithIndex.RoundIndex = roundIndex;
-                        gameWithIndex.GameIndex = gameIndex;
-                        results.Add(gameWithIndex);
+						var gameWithIndex = new GameWithIndex
+						{
+							GameResult = game.GameResult,
+							GameTime = game.GameTime,
+							IsTimeIncluded = game.IsTimeIncluded,
+							MapId = game.MapId,
+							RaceId = game.RaceId,
+							PlayerId = game.PlayerId,
+							RoundIndex = roundIndex,
+							GameIndex = gameIndex
+						};
+						results.Add(gameWithIndex);
                     }
                 }
                 return results;
@@ -51,25 +53,27 @@ namespace SecretNest.TeamPlayer
             }
             else
             {
-                List<GameWithIndex> results = new List<GameWithIndex>();
-                for (int roundIndex = 0; roundIndex < dataFile.Games.Count; roundIndex++)
+                var results = new List<GameWithIndex>();
+                for (var roundIndex = 0; roundIndex < dataFile.Games.Count; roundIndex++)
                 {
                     var round = dataFile.Games[roundIndex];
-                    for (int gameIndex = 0; gameIndex < round.Count; gameIndex++)
+                    for (var gameIndex = 0; gameIndex < round.Count; gameIndex++)
                     {
                         var game = round[gameIndex];
                         if (game.PlayerId[teamSelection] == playerId)
                         {
-                            var gameWithIndex = new GameWithIndex();
-                            gameWithIndex.GameResult = game.GameResult;
-                            gameWithIndex.GameTime = game.GameTime;
-                            gameWithIndex.IsTimeIncluded = game.IsTimeIncluded;
-                            gameWithIndex.MapId = game.MapId;
-                            gameWithIndex.RaceId = game.RaceId;
-                            gameWithIndex.PlayerId = game.PlayerId;
-                            gameWithIndex.RoundIndex = roundIndex;
-                            gameWithIndex.GameIndex = gameIndex;
-                            results.Add(gameWithIndex);
+							var gameWithIndex = new GameWithIndex
+							{
+								GameResult = game.GameResult,
+								GameTime = game.GameTime,
+								IsTimeIncluded = game.IsTimeIncluded,
+								MapId = game.MapId,
+								RaceId = game.RaceId,
+								PlayerId = game.PlayerId,
+								RoundIndex = roundIndex,
+								GameIndex = gameIndex
+							};
+							results.Add(gameWithIndex);
                         }
                     }
                 }
@@ -86,25 +90,27 @@ namespace SecretNest.TeamPlayer
             }
             else
             {
-                List<GameWithIndex> results = new List<GameWithIndex>();
-                for (int roundIndex = 0; roundIndex < dataFile.Games.Count; roundIndex++)
+                var results = new List<GameWithIndex>();
+                for (var roundIndex = 0; roundIndex < dataFile.Games.Count; roundIndex++)
                 {
                     var round = dataFile.Games[roundIndex];
-                    for (int gameIndex = 0; gameIndex < round.Count; gameIndex++)
+                    for (var gameIndex = 0; gameIndex < round.Count; gameIndex++)
                     {
                         var game = round[gameIndex];
                         if (gameResult == game.GameResult)
                         {
-                            var gameWithIndex = new GameWithIndex();
-                            gameWithIndex.GameResult = game.GameResult;
-                            gameWithIndex.GameTime = game.GameTime;
-                            gameWithIndex.IsTimeIncluded = game.IsTimeIncluded;
-                            gameWithIndex.MapId = game.MapId;
-                            gameWithIndex.RaceId = game.RaceId;
-                            gameWithIndex.PlayerId = game.PlayerId;
-                            gameWithIndex.RoundIndex = roundIndex;
-                            gameWithIndex.GameIndex = gameIndex;
-                            results.Add(gameWithIndex);
+							var gameWithIndex = new GameWithIndex
+							{
+								GameResult = game.GameResult,
+								GameTime = game.GameTime,
+								IsTimeIncluded = game.IsTimeIncluded,
+								MapId = game.MapId,
+								RaceId = game.RaceId,
+								PlayerId = game.PlayerId,
+								RoundIndex = roundIndex,
+								GameIndex = gameIndex
+							};
+							results.Add(gameWithIndex);
                         }
                     }
                 }
@@ -124,9 +130,9 @@ namespace SecretNest.TeamPlayer
             if (all == null) return null;
             else if (all.Count == 1) return all[0];
 
-            DateTime latestTime = DateTime.MinValue;
-            int latestRound = -1;
-            int latestGame = -1;
+            var latestTime = DateTime.MinValue;
+            var latestRound = -1;
+            var latestGame = -1;
             GameWithIndex match = null;
             foreach(var game in all)
             {
@@ -176,7 +182,7 @@ namespace SecretNest.TeamPlayer
             var player = game.PlayerId[TeamSelection.Team1];
             if (player != Guid.Empty)
             {
-                for (int g = 0; g < dataFile.Basis.GameCount; g++)
+                for (var g = 0; g < dataFile.Basis.GameCount; g++)
                 {
                     if (g == gameIndex) continue;
                     if (round[g].PlayerId[TeamSelection.Team1] == player)
@@ -189,7 +195,7 @@ namespace SecretNest.TeamPlayer
             player = game.PlayerId[TeamSelection.Team2];
             if (player != Guid.Empty)
             {
-                for (int g = 0; g < dataFile.Basis.GameCount; g++)
+                for (var g = 0; g < dataFile.Basis.GameCount; g++)
                 {
                     if (g == gameIndex) continue;
                     if (round[g].PlayerId[TeamSelection.Team2] == player)

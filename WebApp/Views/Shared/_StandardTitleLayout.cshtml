@@ -1,0 +1,16 @@
+﻿@{
+	Layout = "_Layout";
+}
+
+<h1>@ViewBag.Title</h1>
+
+@section Header
+	{
+	@await RenderSectionAsync("Header", false)
+}
+
+@section Scripts
+	{
+	@await RenderSectionAsync("Scripts", false)
+}
+

@@ -30,7 +30,7 @@ namespace SecretNest.TeamPlayer
 
         public bool SetTeamPlayers(TeamSelection teamSelection, Dictionary<Guid, Player> players, out string errorText)
         {
-            Team selectedTeam = dataFile.Teams[teamSelection];
+            var selectedTeam = dataFile.Teams[teamSelection];
 
             if (dataFile.Basis.RoundCount > 0 && dataFile.Basis.GameCount > 0)
             {

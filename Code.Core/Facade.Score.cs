@@ -10,31 +10,34 @@ namespace SecretNest.TeamPlayer
     {
         public Score GetScore()
         {
-            Score result = new Score();
-
-            result.TeamName = new Dictionary<TeamSelection, string>();
-            result.CurrentSource = new Dictionary<TeamSelection, int>();
-            result.GuaranteedSource = new Dictionary<TeamSelection, int>();
-            result.Rounds = new List<ScorePerRound>();
-            Dictionary<Guid, PlayerWithGameCount> players = new Dictionary<Guid, PlayerWithGameCount>();
+			var result = new Score
+			{
+				TeamName = new Dictionary<TeamSelection, string>(),
+				CurrentSource = new Dictionary<TeamSelection, int>(),
+				GuaranteedSource = new Dictionary<TeamSelection, int>(),
+				Rounds = new List<ScorePerRound>()
+			};
+			var players = new Dictionary<Guid, PlayerWithGameCount>();
 
             InitialScore(result, TeamSelection.Team1, players);
             InitialScore(result, TeamSelection.Team2, players);
 
-            bool gameFinished = true;
+            var gameFinished = true;
 
             if (dataFile.Games != null)
             {
-                for (int roundIndex = 0; roundIndex < dataFile.Basis.RoundCount; roundIndex++)
+                for (var roundIndex = 0; roundIndex < dataFile.Basis.RoundCount; roundIndex++)
                 {
                     var round = dataFile.Games[roundIndex];
-                    ScorePerRound roundResult = new ScorePerRound();
-                    roundResult.Index = roundIndex;
-                    roundResult.Games = new List<ScoreLine>();
-                    roundResult.Score = new Dictionary<TeamSelection, int>();
-                    roundResult.Score.Add(TeamSelection.Team1, 0);
+					var roundResult = new ScorePerRound
+					{
+						Index = roundIndex,
+						Games = new List<ScoreLine>(),
+						Score = new Dictionary<TeamSelection, int>()
+					};
+					roundResult.Score.Add(TeamSelection.Team1, 0);
                     roundResult.Score.Add(TeamSelection.Team2, 0);
-                    for (int gameIndex = 0; gameIndex < dataFile.Basis.GameCount; gameIndex++)
+                    for (var gameIndex = 0; gameIndex < dataFile.Basis.GameCount; gameIndex++)
                     {
                         var game = round[gameIndex];
                         if (game.GameResult != GameResult.Finished)
@@ -42,11 +45,13 @@ namespace SecretNest.TeamPlayer
                             gameFinished = false;
                             continue;
                         }
-                        ScoreLine gameResult = new ScoreLine();
-                        gameResult.Index = gameIndex;
-                        gameResult.PlayerId = game.PlayerId;
-                        gameResult.PlayerName = new Dictionary<TeamSelection, string>();
-                        gameResult.PlayerName.Add(TeamSelection.Team1, GetPlayer(TeamSelection.Team1, gameResult.PlayerId[TeamSelection.Team1]).Name);
+						var gameResult = new ScoreLine
+						{
+							Index = gameIndex,
+							PlayerId = game.PlayerId,
+							PlayerName = new Dictionary<TeamSelection, string>()
+						};
+						gameResult.PlayerName.Add(TeamSelection.Team1, GetPlayer(TeamSelection.Team1, gameResult.PlayerId[TeamSelection.Team1]).Name);
                         gameResult.PlayerName.Add(TeamSelection.Team2, GetPlayer(TeamSelection.Team2, gameResult.PlayerId[TeamSelection.Team2]).Name);
                         gameResult.Winner = game.Winner;
                         roundResult.Games.Add(gameResult);
@@ -116,17 +121,19 @@ namespace SecretNest.TeamPlayer
             score.CurrentSource.Add(teamSelection, 0);
             foreach (var player in dataFile.Teams[teamSelection].Players)
             {
-                PlayerWithGameCount item = new PlayerWithGameCount();
-                item.Id = player.Key;
-                item.Team = teamSelection;
-                //item.Played = 0;
-                //item.Won = 0;
-                //item.Lost = 0;
-                item.Name = player.Value.Name;
-                item.DefaultRace = player.Value.DefaultRace;
-                item.MaxAttending = player.Value.MaxAttending;
-                item.MinAttending = player.Value.MinAttending;
-                players.Add(player.Key, item);
+				var item = new PlayerWithGameCount
+				{
+					Id = player.Key,
+					Team = teamSelection,
+					//item.Played = 0;
+					//item.Won = 0;
+					//item.Lost = 0;
+					Name = player.Value.Name,
+					DefaultRace = player.Value.DefaultRace,
+					MaxAttending = player.Value.MaxAttending,
+					MinAttending = player.Value.MinAttending
+				};
+				players.Add(player.Key, item);
             }
         }
     }

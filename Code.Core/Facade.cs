@@ -21,12 +21,16 @@ namespace SecretNest.TeamPlayer
             }
             else
             {
-                dataFile = new DataFile();
-                dataFile.Basis = new Basis();
-                dataFile.Basis.Races = new Dictionary<Guid, Race>();
-                dataFile.Basis.Maps = new Dictionary<Guid, Map>();
-                dataFile.Teams = new Dictionary<TeamSelection, Team>();
-                dataFile.Teams[TeamSelection.Team1] = new Team() { Players = new Dictionary<Guid, Player>() };
+				dataFile = new DataFile
+				{
+					Basis = new Basis
+					{
+						Races = new Dictionary<Guid, Race>(),
+						Maps = new Dictionary<Guid, Map>()
+					},
+					Teams = new Dictionary<TeamSelection, Team>()
+				};
+				dataFile.Teams[TeamSelection.Team1] = new Team() { Players = new Dictionary<Guid, Player>() };
                 dataFile.Teams[TeamSelection.Team2] = new Team() { Players = new Dictionary<Guid, Player>() };
                 //dataFile.Games = new List<List<Game>>();
             }

@@ -14,7 +14,7 @@ namespace SecretNest.TeamPlayer
 
         public Dictionary<Guid, Race> GetRacesForPlayerDefaultSelection()
         {
-            Dictionary<Guid, Race> result = new Dictionary<Guid, Race>();
+            var result = new Dictionary<Guid, Race>();
             foreach(var race in dataFile.Basis.Races)
             {
                 if (race.Value.IsInPlayerDefault)
@@ -25,7 +25,7 @@ namespace SecretNest.TeamPlayer
 
         public Dictionary<Guid, Race> GetRacesForGameSelection()
         {
-            Dictionary<Guid, Race> result = new Dictionary<Guid, Race>();
+            var result = new Dictionary<Guid, Race>();
             foreach (var race in dataFile.Basis.Races)
             {
                 if (race.Value.IsInGame)
@@ -61,14 +61,16 @@ namespace SecretNest.TeamPlayer
             dataFile.Basis.RoundCount = round;
             dataFile.Basis.GameCount = game;
             dataFile.Games = new List<List<Game>>(round);
-            for (int r = 0; r < round; r++)
+            for (var r = 0; r < round; r++)
             {
-                List<Game> oneRound = new List<Game>(game);
-                for (int g = 0; g < game; g++)
+                var oneRound = new List<Game>(game);
+                for (var g = 0; g < game; g++)
                 {
-                    var oneGame = new Game();
-                    oneGame.PlayerId = new Dictionary<TeamSelection, Guid>();
-                    oneGame.PlayerId.Add(TeamSelection.Team1, Guid.Empty);
+					var oneGame = new Game
+					{
+						PlayerId = new Dictionary<TeamSelection, Guid>()
+					};
+					oneGame.PlayerId.Add(TeamSelection.Team1, Guid.Empty);
                     oneGame.PlayerId.Add(TeamSelection.Team2, Guid.Empty);
                     oneGame.RaceId = new Dictionary<TeamSelection, Guid>();
                     oneGame.RaceId.Add(TeamSelection.Team1, Guid.Empty);

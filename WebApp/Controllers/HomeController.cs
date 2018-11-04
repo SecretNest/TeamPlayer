@@ -10,9 +10,20 @@ namespace WebApp.Controllers
 {
 	public class HomeController : Controller
 	{
+		public HomeController(FacadeService facadeService)
+		{
+			FacadeService = facadeService;
+		}
+
+		/// <summary>
+		/// 数据服务对象。
+		/// </summary>
+		private FacadeService FacadeService { get; }
+
 		public IActionResult Index()
 		{
-			return View();
+			var data = FacadeService.Facade.GetBasis();
+			return View(data);
 		}
 
 		public IActionResult About()

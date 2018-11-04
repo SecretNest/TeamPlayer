@@ -12,6 +12,7 @@ namespace WebApp.Models.Account
 		/// </summary>
 		[Required]
 		[DataType(DataType.Text)]
+		[Display(Name = "用户名")]
 		public string UserName { get; set; }
 
 		/// <summary>
@@ -19,6 +20,7 @@ namespace WebApp.Models.Account
 		/// </summary>
 		[Required]
 		[DataType(DataType.Password)]
+		[Display(Name = "密码")]
 		public string Password { get; set; }
 	}
 }

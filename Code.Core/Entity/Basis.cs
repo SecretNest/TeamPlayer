@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace SecretNest.TeamPlayer.Entity
@@ -7,8 +8,11 @@ namespace SecretNest.TeamPlayer.Entity
     public class Basis
     {
         //比赛名称
+		[Required]
+		[Display(Name="比赛名称")]
         public string Name { get; set; }
         //比赛描述，多行文本
+		[Display(Name = "比赛描述")]
         public string Description { get; set; }
 
         //轮，设置会导致重置比赛数据

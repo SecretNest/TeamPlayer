@@ -14,6 +14,11 @@ namespace WebApp
 		/// 获取或设置管理账号的集合。
 		/// </summary>
 		public ManageAccount[] ManageAccounts { get; set; }
+
+		/// <summary>
+		/// 获取或设置数据文件的地址。
+		/// </summary>
+		public string DataFilePath { get; set; }
 	}
 
 

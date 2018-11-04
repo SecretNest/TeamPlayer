@@ -47,6 +47,12 @@ namespace WebApp
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+			// 权限控制
+			services.AddAuthorization(options =>
+			{
+				options.AddPolicy(Policies.Manage, builder => builder.RequireAuthenticatedUser());
+			});
+
 			services.AddAuthentication(IdentityConstants.ApplicationScheme)
 				.AddCookie(IdentityConstants.ApplicationScheme, options =>
 					{
@@ -61,6 +67,9 @@ namespace WebApp
 
 			// 设置
 			services.Configure<AppSetting>(Configuration.GetSection("AppSetting"));
+
+			// 数据服务
+			services.AddSingleton<FacadeService>();
 		}
 
 		/// <summary>

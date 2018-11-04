@@ -1,0 +1,24 @@
+﻿@model SecretNest.TeamPlayer.Entity.Basis
+@{
+	ViewBag.Title = "基本信息设置";
+}
+
+<form asp-controller="Manage" asp-action="Basis" method="post" asp-antiforgery="true">
+	<div class="row justify-content-center">
+		<div class="col-md-6 col-sm-9 col-12">
+			<div class="form-group">
+				<label asp-for="Name"></label>
+				<input asp-for="Name" class="form-control" />
+				<span asp-validation-for="Name" class="text-danger"></span>
+				<small class="text-muted">网站的主标题，将会显示在主页面。</small>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Description"></label>
+				<input asp-for="Description" class="form-control" />
+				<span asp-validation-for="Description" class="text-danger"></span>
+				<small class="text-muted">网站的描述，将会以较小的文字显示在主标题下方。</small>
+			</div>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,1 @@
+{"Basis":{"Name":"测试比赛","Description":"测试描述","RoundCount":0,"GameCount":0,"Races":{},"Maps":{}},"Teams":{"Team1":{"Name":null,"Players":{}},"Team2":{"Name":null,"Players":{}}},"Games":null}

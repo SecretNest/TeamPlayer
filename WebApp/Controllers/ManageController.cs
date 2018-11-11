@@ -27,20 +27,37 @@ namespace WebApp.Controllers
 		[HttpGet]
 		public IActionResult Basis()
 		{
-			return View();
+			return View(FacadeService.Facade.GetBasis());
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Basis(Basis model)
+		public IActionResult UpdateBasis(Basis model)
 		{
 			if (ModelState.IsValid)
 			{
 				FacadeService.Facade.SetBasisNameAndDescription(model.Name, model.Description);
-				return RedirectToAction("Index", "Home");
+				return RedirectToAction("Basis", "Manage");
 			}
 
-			return View();
+			return View("Basis", model);
+		}
+
+		/// <summary>
+		/// 更新比赛轮次。
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult UpdateRounds(Basis model)
+		{
+			if (ModelState.IsValid)
+			{
+				FacadeService.Facade.SetBasisRoundAndGame(model.RoundCount, model.GameCount);
+			}
+
+			return View("Basis", model);
 		}
 	}
 }

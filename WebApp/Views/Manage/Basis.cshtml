@@ -3,22 +3,80 @@
 	ViewBag.Title = "基本信息设置";
 }
 
-<form asp-controller="Manage" asp-action="Basis" method="post" asp-antiforgery="true">
-	<div class="row justify-content-center">
-		<div class="col-md-6 col-sm-9 col-12">
-			<div class="form-group">
-				<label asp-for="Name"></label>
-				<input asp-for="Name" class="form-control" />
-				<span asp-validation-for="Name" class="text-danger"></span>
-				<small class="text-muted">网站的主标题，将会显示在主页面。</small>
+<div class="row justify-content-center">
+	<div class="col-md-6 col-sm-9 col-12">
+
+		<form asp-controller="Manage" asp-action="UpdateBasis" method="post" asp-antiforgery="true">
+			<div class="card">
+				<div class="card-header">比赛基础信息</div>
+				<div class="card-body">
+					<div class="form-group">
+						<label asp-for="Name"></label>
+						<input asp-for="Name" class="form-control" />
+						<span asp-validation-for="Name" class="text-danger"></span>
+						<small class="text-muted">网站的主标题，将会显示在主页面。</small>
+					</div>
+					<div class="form-group">
+						<label asp-for="Description"></label>
+						<input asp-for="Description" class="form-control" />
+						<span asp-validation-for="Description" class="text-danger"></span>
+						<small class="text-muted">网站的描述，将会以较小的文字显示在主标题下方。</small>
+					</div>
+				</div>
+				<div class="card-footer">
+					<button type="submit" class="btn btn-primary">修改比赛基础信息</button>
+				</div>
+			</div>
+		</form>
+
+		<form asp-controller="Manage" asp-action="UpdateRounds" method="post" asp-antiforgery="true">
+			<div class="card mt-3">
+				<div class="card-header">比赛轮次</div>
+				<div class="card-body">
+					<p class="card-text text-warning"><i class="fa fa-warning"></i> 如果你修改比赛轮次信息，则会清空所有现有轮次数据。</p>
+					<hr />
+					<div class="form-group">
+						<label asp-for="RoundCount">比赛轮次</label>
+						<input asp-for="RoundCount" class="form-control" type="number" step="1" min="1" />
+						<span asp-validation-for="RoundCount" class="text-danger"></span>
+						<small class="text-muted">比赛的轮数。</small>
+					</div>
+
+					<div class="form-group">
+						<label asp-for="GameCount">每轮场次</label>
+						<input asp-for="GameCount" class="form-control" type="number" step="1" min="1" />
+						<span asp-validation-for="GameCount" class="text-danger"></span>
+						<small class="text-muted">每轮比赛的场次数。</small>
+					
+						</div>
+				</div>
+				<div class="card-footer">
+					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#change-round-modal">修改比赛轮次</button>
+				</div>
+			</div>
+			
+			<div class="modal" tabindex="-1" role="dialog" id="change-round-modal">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">修改轮次警告</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p>修改比赛轮次会清空目前已经记录的所有轮次信息。如果你确认要进行这个操作，请单击<q>修改轮次</q>按钮。</p>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">修改轮次</button>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="form-group">
-				<label asp-for="Description"></label>
-				<input asp-for="Description" class="form-control" />
-				<span asp-validation-for="Description" class="text-danger"></span>
-				<small class="text-muted">网站的描述，将会以较小的文字显示在主标题下方。</small>
-			</div>
-		</div>
+		</form>
+
+
 	</div>
-</form>
+</div>

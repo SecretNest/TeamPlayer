@@ -7,3 +7,25 @@
 {
 	<p class="text-muted">@Model.Description</p>
 }
+
+<hr />
+
+<h2 class="lead text-center">比赛轮次</h2>
+<hr />
+<p>比赛共有 @Model.RoundCount 轮。每轮比赛有 @Model.RoundCount 场。</p>
+<hr />
+<h2 class="lead text-center">比赛地图</h2>
+
+@if (Model.Maps != null && Model.Maps.Count != 0)
+{
+	<ul>
+		@foreach (var i in Model.Maps.Values.OrderBy(i => i.Name))
+		{
+			<li>@i.Name</li>
+		}
+	</ul>
+}
+else
+{
+	<p class="text-center text-muted">目前还没有比赛地图，详情请询问管理员。</p>
+}

@@ -7,11 +7,16 @@ namespace SecretNest.TeamPlayer.Entity
 {
     public class Basis
     {
-        //比赛名称
+        /// <summary>
+		/// 比赛名称。
+		/// </summary>
 		[Required]
 		[Display(Name="比赛名称")]
         public string Name { get; set; }
-        //比赛描述，多行文本
+        
+		/// <summary>
+		/// 比赛描述。
+		/// </summary>
 		[Display(Name = "比赛描述")]
         public string Description { get; set; }
 

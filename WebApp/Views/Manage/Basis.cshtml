@@ -47,15 +47,15 @@
 						<input asp-for="GameCount" class="form-control" type="number" step="1" min="1" />
 						<span asp-validation-for="GameCount" class="text-danger"></span>
 						<small class="text-muted">每轮比赛的场次数。</small>
-					
-						</div>
+
+					</div>
 				</div>
 				<div class="card-footer">
 					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#change-round-modal">修改比赛轮次</button>
 				</div>
 			</div>
-			
-			<div class="modal" tabindex="-1" role="dialog" id="change-round-modal">
+
+			<div class="modal fade" tabindex="-1" role="dialog" id="change-round-modal">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -68,15 +68,13 @@
 							<p>修改比赛轮次会清空目前已经记录的所有轮次信息。如果你确认要进行这个操作，请单击<q>修改轮次</q>按钮。</p>
 						</div>
 						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary">修改轮次</button>
+							<button type="submit" class="btn btn-warning">修改轮次</button>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
 						</div>
 					</div>
 				</div>
 			</div>
 
-		</form>
-
-
+		</form>		
 	</div>
 </div>

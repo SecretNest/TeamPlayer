@@ -42,7 +42,7 @@ namespace SecretNest.TeamPlayer
                         {
                             foreach(var game in round)
                             {
-                                if (game.PlayerId[teamSelection] == existed)
+                                if (game.PlayerIds[teamSelection] == existed)
                                 {
                                     errorText = "已参与比赛的选手不允许删除。";
                                     return false;

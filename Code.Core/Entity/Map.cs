@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SecretNest.TeamPlayer.Entity
 {
-    public class Map
-    {
-        //名称，可以修改
-        public string Name { get; set;  }
-    }
+	public class Map
+	{
+		//名称，可以修改
+		public string Name { get; set; }
+	}
 }

@@ -7,10 +7,10 @@ namespace SecretNest.TeamPlayer.Entity
     public class Game
     {
         //参赛者，Empty表示未选择，允许更新为Empty
-        public Dictionary<TeamSelection, Guid> PlayerId { get; set; }
+        public Dictionary<TeamSelection, Guid> PlayerIds { get; set; }
 
         //种族选择，Empty表示未选择，允许更新为Empty
-        public Dictionary<TeamSelection, Guid> RaceId { get; set; }
+        public Dictionary<TeamSelection, Guid> RaceIds { get; set; }
 
         //比赛日期与时间，设置为最小值表示未设置（不显示）；如果不包括时间，时间设置为0点
         public DateTime GameTime { get; set; }

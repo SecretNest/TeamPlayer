@@ -48,25 +48,25 @@ namespace SecretNest.TeamPlayer
 						var gameResult = new ScoreLine
 						{
 							Index = gameIndex,
-							PlayerId = game.PlayerId,
+							PlayerId = game.PlayerIds,
 							PlayerName = new Dictionary<TeamSelection, string>()
 						};
 						gameResult.PlayerName.Add(TeamSelection.Team1, GetPlayer(TeamSelection.Team1, gameResult.PlayerId[TeamSelection.Team1]).Name);
                         gameResult.PlayerName.Add(TeamSelection.Team2, GetPlayer(TeamSelection.Team2, gameResult.PlayerId[TeamSelection.Team2]).Name);
                         gameResult.Winner = game.Winner;
                         roundResult.Games.Add(gameResult);
-                        players[game.PlayerId[TeamSelection.Team1]].Played++;
-                        players[game.PlayerId[TeamSelection.Team2]].Played++;
+                        players[game.PlayerIds[TeamSelection.Team1]].Played++;
+                        players[game.PlayerIds[TeamSelection.Team2]].Played++;
                         if (gameResult.Winner == TeamSelection.Team1)
                         {
-                            players[game.PlayerId[TeamSelection.Team1]].Won++;
-                            players[game.PlayerId[TeamSelection.Team2]].Lost++;
+                            players[game.PlayerIds[TeamSelection.Team1]].Won++;
+                            players[game.PlayerIds[TeamSelection.Team2]].Lost++;
                             roundResult.Score[TeamSelection.Team1]++;
                         }
                         else
                         {
-                            players[game.PlayerId[TeamSelection.Team2]].Won++;
-                            players[game.PlayerId[TeamSelection.Team1]].Lost++;
+                            players[game.PlayerIds[TeamSelection.Team2]].Won++;
+                            players[game.PlayerIds[TeamSelection.Team1]].Lost++;
                             roundResult.Score[TeamSelection.Team2]++;
                         }
                     }

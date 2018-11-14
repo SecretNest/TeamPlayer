@@ -1,0 +1,87 @@
+﻿@{
+	ViewBag.Title = "地图管理";
+}
+
+<div class="alert alert-info">以下是目前已经添加的比赛地图列表。第一次显示时，列表名称将自动按照字母顺序排序。</div>
+
+<div id="root">
+
+	<form asp-controller="Manage" asp-action="Map" asp-antiforgery="true" onsubmit="reorderData(this);">
+
+		<div v-if="items && items.length !== 0">
+			<table class="table table-hover table-striped">
+				<thead>
+					<tr>
+						<th>名称</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr v-for="(item, index) in items" :key="index">
+						<th>
+							<input type="text" class="form-control form-control-sm" required="required" name="[0].Value.Name" v-model="item.value.name" />
+						</th>
+						<td>
+							<input type="hidden" name="[0].Key" v-model="item.key" />
+							<div class="btn-group btn-group-sm">
+								<button type="button" class="btn btn-danger" v-on:click="deleteItem(index)">删除</button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+		<div v-else>
+			<hr />
+			<p class="text-muted text-center">目前还没有设定任何地图</p>
+		</div>
+
+		<hr />
+		<button type="button" class="btn btn-primary" v-on:click="addItem()">添加新地图</button>
+		<button type="submit" class="btn btn-success">保存地图</button>
+
+	</form>
+</div>
+
+
+
+
+@section Scripts{
+	<script>
+
+
+		$(function () {
+
+			var dataVue = new Vue({
+				el: '#root',
+				data: {
+					items: []
+				},
+				methods: {
+					addItem: function () {
+						this.items.push({
+							key: '',
+							value: {
+								name: ''
+							}
+						});
+					},
+					deleteItem: function (index) {
+						this.items.splice(index, 1);
+					}
+				},
+				created: function () {
+					$.get('/api/map',
+						function (data) {
+							dataVue.items = data;
+						});
+				}
+			});
+
+		});
+
+
+	</script>
+}

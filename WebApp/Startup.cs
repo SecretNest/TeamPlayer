@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Framework.DependencyInjection;
+using Sakura.AspNetCore.Mvc;
 
 namespace WebApp
 {
@@ -70,6 +72,15 @@ namespace WebApp
 
 			// 数据服务
 			services.AddSingleton<FacadeService>();
+
+			// 操作消息相关
+			services.AddHttpContextAccessor();
+			services.AddSession();
+			services.AddEnhancedTempData();
+			services.AddOperationMessages();
+
+			// 分页
+			services.AddBootstrapPagerGenerator(options => options.ConfigureDefault());
 		}
 
 		/// <summary>
@@ -93,8 +104,8 @@ namespace WebApp
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
-
 			app.UseAuthentication();
+			app.UseSession();
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute(

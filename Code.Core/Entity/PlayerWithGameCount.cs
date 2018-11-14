@@ -6,7 +6,7 @@ namespace SecretNest.TeamPlayer.Entity
 {
     public class PlayerWithGameCount : Player
     {
-        //PlayerId
+        //PlayerIds
         public Guid Id { get; set; }
 
         //Team

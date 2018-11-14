@@ -10,7 +10,6 @@ namespace SecretNest.TeamPlayer.Entity
         /// <summary>
 		/// 比赛名称。
 		/// </summary>
-		[Required]
 		[Display(Name="比赛名称")]
         public string Name { get; set; }
         

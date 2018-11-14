@@ -56,7 +56,13 @@
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" asp-controller="Manage" asp-action="Basis">基本信息</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Something else here</a>
+							<a class="dropdown-item" asp-controller="Manage" asp-action="Map">地图</a>
+							<a class="dropdown-item" asp-controller="Manage" asp-action="Race">种族</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" asp-controller="Manage" asp-action="Team" asp-route-teamSelection="Team1">队伍一</a>
+							<a class="dropdown-item" asp-controller="Manage" asp-action="Team" asp-route-teamSelection="Team2">队伍二</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" asp-controller="Manage" asp-action="Score">比赛结果</a>
 						</div>
 					</li>
 
@@ -81,6 +87,7 @@
 		<script src="~/lib/jquery/jquery.js"></script>
 		<script src="~/lib/popper.js/umd/popper.js"></script>
 		<script src="~/lib/bootstrap/js/bootstrap.js"></script>
+		<script src="~/lib/vue/vue.js"></script>
 		<script src="~/js/site.js" asp-append-version="true"></script>
 	</environment>
 	<environment exclude="Development">
@@ -103,6 +110,12 @@
 				asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
 				asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
 		</script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"
+				integrity="sha256-FtWfRI+thWlNz2sB3SJbwKx5PgMyKIVgwHCTwa3biXc="
+				crossorigin="anonymous"
+				asp-fallback-test="window.Vue"
+				asp-fallback-src="~/lib/vue/vue.min.js"></script>
 
 		<script src="~/js/site.min.js" asp-append-version="true"></script>
 	</environment>

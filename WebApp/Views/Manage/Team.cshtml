@@ -1,0 +1,114 @@
+﻿@model SecretNest.TeamPlayer.Entity.Team
+
+<form asp-controller="Manage" asp-action="UpdateTeamName" asp-route-teamSelection="@ViewBag.TeamSelection" method="post" asp-antiforgery="true">
+	<label>队伍名称</label>
+	<input asp-for="Name" class="form-control" type="text" />
+	<button type="submit" class="btn btn-primary">更改队伍名称</button>
+</form>
+
+<div id="root" data-team-selection="@ViewBag.TeamSelection">
+
+	<form asp-controller="Manage" asp-action="Team1" asp-antiforgery="true" onsubmit="reorderData(this);">
+
+		<div v-if="items && items.length !== 0">
+			<table class="table table-hover table-striped">
+				<thead>
+					<tr>
+						<th>名称</th>
+						<th>默认种族</th>
+						<th>最少参赛次数</th>
+						<th>最多参赛次数</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr v-for="(item, index) in items" :key="index">
+						<th>
+							<input type="hidden" name="[0].Key" v-model="item.key" />
+							<input type="text" class="form-control form-control-sm" required="required" name="[0].Value.Name" v-model="item.value.name" />
+						</th>
+						<td>
+							<select required="required" name="[0].Value.DefaultRace" v-model="item.value.defaultRace">
+								<option value="00000000-0000-0000-0000-000000000000">无默认种族</option>
+								<option v-for="race in races" v-bind:value="race.key">{{race.value.name}}</option>
+							</select>
+						</td>
+						<td>
+							<input type="number" min="0" required="required" name="[0].Value.MinAttending" v-model="item.value.minAttending" />
+						</td>
+						<td>
+							<input type="number" min="0" required="required" name="[0].Value.MaxAttending" v-model="item.value.maxAttending" />
+						</td>
+						<td>
+							<div class="btn-group btn-group-sm">
+								<button type="button" class="btn btn-danger" v-on:click="deleteItem(index)">删除</button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+		<div v-else>
+			<hr />
+			<p class="text-muted text-center">目前还没有任何参赛者</p>
+		</div>
+
+		<hr />
+		<button type="button" class="btn btn-primary" v-on:click="addItem()">添加参赛者</button>
+		<button type="submit" class="btn btn-success">保存参赛者</button>
+
+	</form>
+</div>
+
+@section Scripts{
+	<script>
+
+		$(function () {
+
+			var dataVue = new Vue({
+				el: '#root',
+				data: {
+					items: [],
+					races: []
+				},
+				methods: {
+					addItem: function () {
+						this.items.push({
+							key: '',
+							value: {
+								name: '',
+								defaultRace: '00000000-0000-0000-0000-000000000000',
+								minAttending: 0,
+								maxAttending: 0
+							}
+						});
+					},
+					deleteItem: function (index) {
+						this.items.splice(index, 1);
+					}
+				},
+				created: function () {
+
+					$.get('/api/race',
+						function (raceData) {
+
+							// 合格的种族
+							dataVue.races = raceData.filter(function (i) {
+								return i.value.canBePlayerDefault;
+							});
+
+							var teamSelection = $('#root').data('team-selection');
+							$.get('/api/player?teamSelection=' + teamSelection,
+								function (playerData) {
+									dataVue.items = playerData;
+								});
+
+						});
+				}
+			});
+		})
+
+	</script>
+}

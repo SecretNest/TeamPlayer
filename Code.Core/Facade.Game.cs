@@ -33,8 +33,8 @@ namespace SecretNest.TeamPlayer
 							GameTime = game.GameTime,
 							IsTimeIncluded = game.IsTimeIncluded,
 							MapId = game.MapId,
-							RaceId = game.RaceId,
-							PlayerId = game.PlayerId,
+							RaceIds = game.RaceIds,
+							PlayerIds = game.PlayerIds,
 							RoundIndex = roundIndex,
 							GameIndex = gameIndex
 						};
@@ -60,7 +60,7 @@ namespace SecretNest.TeamPlayer
                     for (var gameIndex = 0; gameIndex < round.Count; gameIndex++)
                     {
                         var game = round[gameIndex];
-                        if (game.PlayerId[teamSelection] == playerId)
+                        if (game.PlayerIds[teamSelection] == playerId)
                         {
 							var gameWithIndex = new GameWithIndex
 							{
@@ -68,8 +68,8 @@ namespace SecretNest.TeamPlayer
 								GameTime = game.GameTime,
 								IsTimeIncluded = game.IsTimeIncluded,
 								MapId = game.MapId,
-								RaceId = game.RaceId,
-								PlayerId = game.PlayerId,
+								RaceIds = game.RaceIds,
+								PlayerIds = game.PlayerIds,
 								RoundIndex = roundIndex,
 								GameIndex = gameIndex
 							};
@@ -105,8 +105,8 @@ namespace SecretNest.TeamPlayer
 								GameTime = game.GameTime,
 								IsTimeIncluded = game.IsTimeIncluded,
 								MapId = game.MapId,
-								RaceId = game.RaceId,
-								PlayerId = game.PlayerId,
+								RaceIds = game.RaceIds,
+								PlayerIds = game.PlayerIds,
 								RoundIndex = roundIndex,
 								GameIndex = gameIndex
 							};
@@ -179,26 +179,26 @@ namespace SecretNest.TeamPlayer
 
             var round = dataFile.Games[roundIndex];
 
-            var player = game.PlayerId[TeamSelection.Team1];
+            var player = game.PlayerIds[TeamSelection.Team1];
             if (player != Guid.Empty)
             {
                 for (var g = 0; g < dataFile.Basis.GameCount; g++)
                 {
                     if (g == gameIndex) continue;
-                    if (round[g].PlayerId[TeamSelection.Team1] == player)
+                    if (round[g].PlayerIds[TeamSelection.Team1] == player)
                     {
                         errorText = "队伍1选手在本轮已经参加过比赛。";
                         return false;
                     }
                 }
             }
-            player = game.PlayerId[TeamSelection.Team2];
+            player = game.PlayerIds[TeamSelection.Team2];
             if (player != Guid.Empty)
             {
                 for (var g = 0; g < dataFile.Basis.GameCount; g++)
                 {
                     if (g == gameIndex) continue;
-                    if (round[g].PlayerId[TeamSelection.Team2] == player)
+                    if (round[g].PlayerIds[TeamSelection.Team2] == player)
                     {
                         errorText = "队伍2选手在本轮已经参加过比赛。";
                         return false;

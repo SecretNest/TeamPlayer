@@ -5,7 +5,9 @@
 
 @if (!string.IsNullOrWhiteSpace(Model.Description))
 {
-	<p class="text-muted">@Model.Description</p>
+	<div class="text-muted">
+		@Html.Raw(Model.Description)
+	</div>
 }
 
 <hr />

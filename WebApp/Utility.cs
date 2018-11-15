@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using WebApp.Models;
 
 namespace WebApp
@@ -30,7 +32,7 @@ namespace WebApp
 		/// <param name="defaultValue"></param>
 		/// <returns></returns>
 		public static TValue GetValueOfDefault<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, TKey key,
-			TValue defaultValue = default(TValue))
+			TValue defaultValue = default)
 		{
 			return dictionary.TryGetValue(key, out var result) ? result : defaultValue;
 		}
@@ -43,8 +45,25 @@ namespace WebApp
 		public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(
 			this IEnumerable<KeyedItem<TKey, TValue>> items)
 		{
-			
+
 			return new Dictionary<TKey, TValue>(items.Select(i => new KeyValuePair<TKey, TValue>(i.Key, i.Value)));
+		}
+
+		/// <summary>
+		/// 获取枚举选项的描述性名称。
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="enumItem"></param>
+		/// <returns></returns>
+		public static string GetDisplayString<T>(this T enumItem) where T : Enum
+		{
+			var memberName = typeof(T).GetEnumName(enumItem);
+			var member = typeof(T).GetField(memberName,
+				BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.Instance);
+
+			var displayAttr = member.GetCustomAttribute<DisplayAttribute>();
+
+			return displayAttr?.Name ?? memberName;
 		}
 	}
 }

@@ -1,17 +1,35 @@
-﻿@model SecretNest.TeamPlayer.Entity.Team
+﻿@using System.Globalization
+@using SecretNest.TeamPlayer.Entity
+@model SecretNest.TeamPlayer.Entity.Team
+@{
+	var selection = (TeamSelection)ViewBag.TeamSelection;
+	ViewBag.Title = string.Format(CultureInfo.CurrentUICulture, "队伍管理 - {0}", selection.GetDisplayString());
+}
 
-<form asp-controller="Manage" asp-action="UpdateTeamName" asp-route-teamSelection="@ViewBag.TeamSelection" method="post" asp-antiforgery="true">
-	<label>队伍名称</label>
-	<input asp-for="Name" class="form-control" type="text" />
-	<button type="submit" class="btn btn-primary">更改队伍名称</button>
+<div class="alert alert-info">本页面可用于修改队伍名称和队伍成员。在点击<q>保存参赛者</q>之前，对队伍成员的所有更改将不会生效。同一时刻只能对队伍名称和参赛者进行其中一项更改。单击相应按钮时，另一部分的修改将被忽略。</div>
+
+<form asp-controller="Manage" asp-action="UpdateTeamName" asp-route-teamSelection="@selection" method="post" asp-antiforgery="true">
+
+	<div class="input-group mb-3">
+		<div class="input-group-prepend">
+			<span class="input-group-text" id="team-name-label">队伍名称</span>
+		</div>
+		<input type="text" asp-for="Name" class="form-control" required="required" aria-describedby="team-name-label">
+		<div class="input-group-append">
+			<button type="submit" class="btn btn-outline-primary">更改队伍名称</button>
+		</div>
+
+	</div>
 </form>
 
-<div id="root" data-team-selection="@ViewBag.TeamSelection">
+<h2 class="text-center lead">队伍成员列表</h2>
 
-	<form asp-controller="Manage" asp-action="Team1" asp-antiforgery="true" onsubmit="reorderData(this);">
+<div id="root" data-team-selection="@selection">
+
+	<form asp-controller="Manage" asp-action="UpdateTeamPlayers" asp-antiforgery="true" onsubmit="reorderData(this);">
 
 		<div v-if="items && items.length !== 0">
-			<table class="table table-hover table-striped">
+			<table class="table table-hover table-striped mt-3">
 				<thead>
 					<tr>
 						<th>名称</th>
@@ -29,16 +47,16 @@
 							<input type="text" class="form-control form-control-sm" required="required" name="[0].Value.Name" v-model="item.value.name" />
 						</th>
 						<td>
-							<select required="required" name="[0].Value.DefaultRace" v-model="item.value.defaultRace">
+							<select class="form-control form-control-sm" required="required" name="[0].Value.DefaultRace" v-model="item.value.defaultRace">
 								<option value="00000000-0000-0000-0000-000000000000">无默认种族</option>
 								<option v-for="race in races" v-bind:value="race.key">{{race.value.name}}</option>
 							</select>
 						</td>
 						<td>
-							<input type="number" min="0" required="required" name="[0].Value.MinAttending" v-model="item.value.minAttending" />
+							<input class="form-control form-control-sm" type="number" min="0" required="required" name="[0].Value.MinAttending" v-model="item.value.minAttending" />
 						</td>
 						<td>
-							<input type="number" min="0" required="required" name="[0].Value.MaxAttending" v-model="item.value.maxAttending" />
+							<input class="form-control form-control-sm" type="number" min="0" required="required" name="[0].Value.MaxAttending" v-model="item.value.maxAttending" />
 						</td>
 						<td>
 							<div class="btn-group btn-group-sm">

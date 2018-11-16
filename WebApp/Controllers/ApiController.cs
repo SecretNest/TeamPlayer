@@ -37,5 +37,11 @@ namespace WebApp.Controllers
 		{
 			return FacadeService.Facade.GetTeam(teamSelection).Players.ToKeyed().OrderBy(i => i.Value.Name);
 		}
+
+		[HttpGet("game/{round}")]
+		public IEnumerable<GameWithIndex> Game(int round)
+		{
+			return FacadeService.Facade.GetGamesByRound(round);
+		}
 	}
 }

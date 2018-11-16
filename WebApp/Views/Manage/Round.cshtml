@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Sakura.AspNetCore.Mvc
+@inject FacadeService FacadeService
+@inject IViewLocalizer ViewLocalizer
+@model IEnumerable<SecretNest.TeamPlayer.Entity.GameWithIndex>
+@{
+	var round = (int)ViewBag.Round;
+	ViewBag.Title = ViewLocalizer["结果管理 - 第 {0} 轮", round];
+
+	// 轮次数目
+	var rounds = FacadeService.Facade.GetBasis().RoundCount;
+	var options = new PagerOptions();
+	options.ConfigureDefault();
+	options.ExpandPageItemsForCurrentPage = rounds;
+}
+
+
+
+<div class="alert alert-info">本页面用于管理系统中所有记录比赛的结果。要开始。请首先选择一个轮次。<strong>注意：你每次只能更新一场比赛。保存单场比赛信息后，对其他场次的更改将被忽略。</strong></div>
+
+<div class="d-flex justify-content-center">
+	<pager total-page="@rounds" current-page="@round" options="@options" item-default-content="@PagerItemContentGenerators.TextFormat("第 {0} 轮")" item-default-link="@PagerItemLinkGenerators.QueryName("round")" />
+</div>
+
+<hr />
+
+@if (Model.Any())
+{
+	<div class="list-group">
+		@foreach (var game in Model)
+		{
+			<div class="list-group-item list-group-item-action">
+				<partial name="_GamePartial" model="@game" />
+			</div>
+		}
+	</div>
+}
+else
+{
+	<p class="text-muted text-center">没有找到本轮次的任何比赛信息。请检查轮次设定是否正确或者重新生成轮次。</p>
+}

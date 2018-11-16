@@ -1,0 +1,85 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using SecretNest.TeamPlayer.Entity
+@model GameWithIndex
+@inject FacadeService FacadeService
+@inject IViewLocalizer ViewLocalizer
+@{
+	var raceList = new SelectList(FacadeService.Facade.GetBasis().Races, "Key", "Value.Name");
+	var mapList = new SelectList(FacadeService.Facade.GetMaps(), "Key", "Value.Name");
+	var team1Players = new SelectList(FacadeService.Facade.GetTeam(TeamSelection.Team1).Players, "Key", "Value.Name");
+	var team2Players = new SelectList(FacadeService.Facade.GetTeam(TeamSelection.Team2).Players, "Key", "Value.Name");
+	var emptyGuid = Guid.Empty;
+}
+
+<form asp-controller="Manage" asp-action="UpdateResult" asp-route-roundIndex="@Model.RoundIndex" asp-route-gameIndex="@Model.GameIndex" method="post" asp-antiforgery="true" data-ajax="true" data-ajax-update="@ViewBag.TargetName">
+	<div>
+
+		<div class="d-flex w-100 justify-content-between align-content-center">
+			<h4>@ViewLocalizer["第 {0} 轮第 {1} 场", Model.RoundIndex + 1, Model.GameIndex + 1]</h4>
+			<button class="btn btn-primary" type="submit">保存本场信息</button>
+		</div>
+
+		<div class="card-group mt-3">
+
+			<div class="card text-center">
+				<div class="card-header">队伍一</div>
+				<div class="card-body">
+					<div class="form-group">
+						<div class="form-group">
+							<label asp-for="PlayerIds[TeamSelection.Team1]">选手</label>
+							<select class="form-control" asp-for="PlayerIds[TeamSelection.Team1]" asp-items="@team1Players">
+								<option value="@emptyGuid">未选择</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label asp-for="RaceIds[TeamSelection.Team1]">种族</label>
+							<select class="form-control" asp-for="RaceIds[TeamSelection.Team1]" asp-items="@raceList">
+								<option value="@emptyGuid">未选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card text-center">
+				<div class="card-header">比赛信息</div>
+				<div class="card-body">
+					<div class="form-group">
+						<label asp-for="MapId">比赛地图</label>
+						<select asp-for="MapId" asp-items="@mapList" class="form-control">
+							<option value="@emptyGuid">未选择</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label asp-for="GameResult">比赛结果</label>
+						<select asp-enum-for="GameResult" asp-text-source="Name" class="form-control"></select>
+					</div>
+
+				</div>
+			</div>
+
+
+			<div class="card text-center">
+				<div class="card-header">队伍二</div>
+				<div class="card-body">
+					<div class="form-group">
+						<div class="form-group">
+							<label asp-for="PlayerIds[TeamSelection.Team2]">选手</label>
+							<select class="form-control" asp-for="PlayerIds[TeamSelection.Team2]" asp-items="@team2Players">
+								<option value="@emptyGuid">未选择</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label asp-for="RaceIds[TeamSelection.Team2]">种族</label>
+							<select class="form-control" asp-for="RaceIds[TeamSelection.Team2]" asp-items="@raceList">
+								<option value="@emptyGuid">未选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<textarea class="form-control mt-3" asp-for="Description" rows="3" placeholder="在此处输入比赛相关的其他额外备注信息"></textarea>
+	</div>
+</form>

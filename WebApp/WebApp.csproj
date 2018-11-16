@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="Models\Manage\" />
+    <Folder Include="Views\Shared\Components\RoundResultList\" />
   </ItemGroup>
 
   <ItemGroup>

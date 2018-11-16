@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sakura.AspNetCore;
 using SecretNest.TeamPlayer.Entity;
 using System;
+using System.Globalization;
 using WebApp.Models;
 
 namespace WebApp.Controllers
@@ -220,6 +221,35 @@ namespace WebApp.Controllers
 			}
 
 			return RedirectToAction("Team", "Manage", new { teamSelection });
+		}
+
+		/// <summary>
+		/// 获取给定轮次的结果信息。
+		/// </summary>
+		/// <returns></returns>
+		public IActionResult Round(int round = 1)
+		{
+			ViewBag.Round = round;
+			return View(FacadeService.Facade.GetGamesByRound(round - 1));
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult UpdateResult(int roundIndex, int gameIndex, Game game)
+		{
+			if (FacadeService.Facade.SetGame(roundIndex, gameIndex, game, out var error))
+			{
+				OperationMessageAccessor.Messages.Add(OperationMessageLevel.Success, "操作成功",
+					string.Format(CultureInfo.CurrentUICulture, "第 {0} 轮第 {1} 场的比赛信息已经更新", roundIndex, gameIndex));
+			}
+			else
+			{
+				OperationMessageAccessor.Messages.Add(OperationMessageLevel.Success, "操作失败",
+					string.Format(CultureInfo.CurrentUICulture, "第 {0} 轮第 {1} 场的比赛信息更新失败，原因：{2}", roundIndex, gameIndex, error));
+
+			}
+
+			return RedirectToAction("Round", "Manage", new { round = roundIndex + 1 });
 		}
 	}
 }

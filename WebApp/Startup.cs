@@ -47,7 +47,9 @@ namespace WebApp
 			});
 
 
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+				.AddViewLocalization()
+				.AddDataAnnotationsLocalization();
 
 			// 权限控制
 			services.AddAuthorization(options =>

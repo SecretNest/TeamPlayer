@@ -65,5 +65,27 @@ namespace WebApp
 
 			return displayAttr?.Name ?? memberName;
 		}
+
+		/// <summary>
+		/// 产生一个双循环序列。循环具有指定的长度，并且按照给定数量打断。
+		/// </summary>
+		/// <param name="maxCount"></param>
+		/// <param name="roundCount"></param>
+		/// <returns></returns>
+		public static IEnumerable<IEnumerable<int>> DoubleRange(int maxCount, int roundCount)
+		{
+			if (roundCount <= 0)
+			{
+				throw new ArgumentOutOfRangeException(nameof(roundCount), roundCount, "每个循环的数据个数必须为正整数。");
+			}
+
+			var start = 0;
+			while (start < maxCount)
+			{
+				var end = Math.Min(maxCount, start + roundCount);
+				yield return Enumerable.Range(start, end - start);
+				start = end;
+			}
+		}
 	}
 }

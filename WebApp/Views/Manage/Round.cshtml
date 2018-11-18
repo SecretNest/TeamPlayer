@@ -39,3 +39,16 @@ else
 {
 	<p class="text-muted text-center">没有找到本轮次的任何比赛信息。请检查轮次设定是否正确或者重新生成轮次。</p>
 }
+
+@section Scripts{
+
+	<script>
+
+		function changeDefaultRace(ele) {
+			var raceSelector = $(ele).closest('.form-group').next().find('select');
+			var defaultRace = $(':selected', ele).data('default-race');
+			raceSelector.val(defaultRace);
+		}
+
+	</script>
+}

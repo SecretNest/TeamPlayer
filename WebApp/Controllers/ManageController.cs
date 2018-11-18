@@ -240,12 +240,12 @@ namespace WebApp.Controllers
 			if (FacadeService.Facade.SetGame(roundIndex, gameIndex, game, out var error))
 			{
 				OperationMessageAccessor.Messages.Add(OperationMessageLevel.Success, "操作成功",
-					string.Format(CultureInfo.CurrentUICulture, "第 {0} 轮第 {1} 场的比赛信息已经更新", roundIndex, gameIndex));
+					string.Format(CultureInfo.CurrentUICulture, "第 {0} 轮第 {1} 场的比赛信息已经更新", roundIndex + 1, gameIndex));
 			}
 			else
 			{
-				OperationMessageAccessor.Messages.Add(OperationMessageLevel.Success, "操作失败",
-					string.Format(CultureInfo.CurrentUICulture, "第 {0} 轮第 {1} 场的比赛信息更新失败，原因：{2}", roundIndex, gameIndex, error));
+				OperationMessageAccessor.Messages.Add(OperationMessageLevel.Error, "操作失败",
+					string.Format(CultureInfo.CurrentUICulture, "第 {0} 轮第 {1} 场的比赛信息更新失败，原因：{2}", roundIndex + 1, gameIndex, error));
 
 			}
 

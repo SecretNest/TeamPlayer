@@ -77,6 +77,7 @@ namespace WebApp
 
 			// 操作消息相关
 			services.AddHttpContextAccessor();
+			services.AddMemoryCache();
 			services.AddSession();
 			services.AddEnhancedTempData();
 			services.AddOperationMessages();
@@ -105,7 +106,7 @@ namespace WebApp
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
-			app.UseCookiePolicy();
+			//app.UseCookiePolicy();
 			app.UseAuthentication();
 			app.UseSession();
 			app.UseMvc(routes =>

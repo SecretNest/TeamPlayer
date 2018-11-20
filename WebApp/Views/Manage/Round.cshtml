@@ -19,28 +19,37 @@
 <div class="alert alert-info">本页面用于管理系统中所有记录比赛的结果。要开始，请首先选择一个轮次。<br />
 	<strong>注意：你每次只能更新一场比赛。保存单场比赛信息后，对其他场次的更改将被忽略。</strong></div>
 
-<div class="d-flex justify-content-center">
-	<pager total-page="@rounds" current-page="@round" options="@options" item-default-content="@PagerItemContentGenerators.TextFormat("第 {0} 轮")" item-default-link="@PagerItemLinkGenerators.QueryName("round")" />
-</div>
 
-<hr />
-
-@if (Model.Any())
+@if (rounds == 0)
 {
-	<div>
-		@foreach (var game in Model)
-		{
-			<div class="card mt-3">
-				<div class="card-body">
-					<partial name="_GamePartial" model="@game"/>
-				</div>
-			</div>
-		}
-	</div>
+	<p class="text-center text-muted">没有任何轮次。请先在 <a asp-controller="Manage" asp-action="Basis">基本设置</a> 页面中设定轮次。</p>
 }
 else
 {
-	<p class="text-muted text-center">没有找到本轮次的任何比赛信息。请检查轮次设定是否正确或者重新生成轮次。</p>
+	<div class="d-flex justify-content-center">
+		<pager total-page="@rounds" current-page="@round" options="@options" item-default-content="@PagerItemContentGenerators.TextFormat("第 {0} 轮")" item-default-link="@PagerItemLinkGenerators.QueryName("round")" />
+	</div>
+
+	<hr />
+
+@if (Model.Any())
+ {
+	 <div>
+		 @foreach (var game in Model)
+		 {
+			 <div class="card mt-3">
+				 <div class="card-body">
+					 <partial name="_GamePartial" model="@game"/>
+				 </div>
+			 </div>
+		 }
+	 </div>
+ }
+ else
+ {
+	 <p class="text-muted text-center">没有找到本轮次的任何比赛信息。请检查轮次设定是否正确或者重新生成轮次。</p>
+ }
+
 }
 
 @section Scripts{

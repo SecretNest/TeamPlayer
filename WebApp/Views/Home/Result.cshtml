@@ -1,0 +1,113 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using SecretNest.TeamPlayer.Entity
+@model SecretNest.TeamPlayer.Entity.Score
+@inject IViewLocalizer ViewLocalizer
+
+<div class="card-group">
+	<div class="card text-center">
+		<div class="card-body">
+			<h4><a asp-controller="Home" asp-action="Team1">@Model.TeamName[TeamSelection.Team1]</a></h4>
+			<p class="h1">@Model.CurrentSource[TeamSelection.Team1]</p>
+			@if (Model.GuaranteedSource != null)
+			{
+				<small class="text-muted">扣除罚分后：@Model.GuaranteedSource[TeamSelection.Team1]</small>
+			}
+		</div>
+	</div>
+	<div class="card text-center">
+		<div class="card-body">
+			<h4><a asp-controller="Home" asp-action="Team2">@Model.TeamName[TeamSelection.Team2]</a></h4>
+			<p class="h1">@Model.CurrentSource[TeamSelection.Team2]</p>
+			@if (Model.GuaranteedSource != null)
+			{
+				<small class="text-muted">扣除罚分后：@Model.GuaranteedSource[TeamSelection.Team2]</small>
+			}
+		</div>
+	</div>
+</div>
+
+<hr />
+<h2 class="text-center lead">轮次得分</h2>
+
+@if (Model.Rounds.Any())
+{
+	<div class="list-group">
+		@foreach (var round in Model.Rounds)
+		{
+			<div class="list-group-item list-group-item-action">
+
+				<div class="card-group">
+					<div class="card text-center">
+						<div class="card-body">
+							<h4><a asp-controller="Home" asp-action="Team1">@Model.TeamName[TeamSelection.Team1]</a></h4>
+							<p class="h1">@round.Score[TeamSelection.Team1]</p>
+						</div>
+					</div>
+					<div class="card text-center">
+						<div class="card-body">
+							<h4><a asp-controller="Home" asp-action="Team2">@Model.TeamName[TeamSelection.Team2]</a></h4>
+							<p class="h1">@round.Score[TeamSelection.Team2]</p>
+						</div>
+					</div>
+				</div>
+
+				<hr />
+
+				@if (round.Games.Any())
+				{
+					<table class="table table-striped table-hover">
+						<thead></thead>
+						<tbody>
+							@foreach (var game in round.Games)
+							{
+								<tr>
+									<th>@ViewLocalizer["第 {0} 场", game.Index + 1]</th>
+									<td>
+										<span>
+											<a asp-controller="Home" asp-action="Player" asp-route-team="Team1" asp-route-id="@game.PlayerId[TeamSelection.Team1]">@game.PlayerName[TeamSelection.Team1]</a>
+
+											@if (game.Winner == TeamSelection.Team1)
+											{
+												<strong class="text-success">胜</strong>
+											}
+											else
+											{
+												<strong class="text-danger">负</strong>
+											}
+										</span>
+
+
+									</td>
+									<td>
+										<a asp-controller="Home" asp-action="Player" asp-route-team="Team1" asp-route-id="@game.PlayerId[TeamSelection.Team1]">@game.PlayerName[TeamSelection.Team1]</a>
+
+										@if (game.Winner == TeamSelection.Team2)
+										{
+											<strong class="text-success">胜</strong>
+										}
+										else
+										{
+											<strong class="text-danger">负</strong>
+										}
+									</td>
+									<td></td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				}
+				else
+				{
+					<hr />
+					<p class="text-center text-muted">本轮比赛还没有任何已经结算的场次</p>
+				}
+
+			</div>
+		}
+	</div>
+
+}
+else
+{
+	<p class="text-muted text-center">目前还没有任何轮次得分信息</p>
+}

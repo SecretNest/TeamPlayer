@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using SecretNest.TeamPlayer.Entity
+@model SecretNest.TeamPlayer.Entity.Player
+@inject IViewLocalizer ViewLocalizer
+@inject FacadeService FacadeService
+@{
+
+	ViewBag.Title = ViewLocalizer["选手详情 - {0}", Model.Name];
+	var team = (TeamSelection)ViewBag.Team;
+	var playerId = (Guid)ViewBag.PlayerId;
+	var playerGames = FacadeService.Facade.GetGamesByPlayer(team, playerId);
+}
+
+<div class="card">
+	<div class="card-header">基本信息</div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>姓名</th>
+				<th>默认种族</th>
+				<th>最小出席限制</th>
+				<th>最大出席限制</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th>@Model.Name</th>
+				<td>
+					@if (FacadeService.Facade.GetBasis().Races.TryGetValue(Model.DefaultRace, out var race))
+					{
+						<span>@race.Name</span>
+					}
+					else
+					{
+						<span class="text-center">无</span>
+					}
+				</td>
+				<td>
+					@if (Model.MinAttending != 0)
+					{
+						<span>@Model.MinAttending</span>
+					}
+					else
+					{
+						<span class="text-muted">无</span>
+					}
+				</td>
+				<td>
+					@if (Model.MaxAttending != 0)
+					{
+						<span>@Model.MaxAttending</span>
+					}
+					else
+					{
+						<span class="text-muted">无</span>
+					}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<hr />
+<h2 class="text-center lead">最近比赛</h2>
+<hr />
+
+@if (playerGames.Any())
+{
+	<div>
+		<div class="mt-3">
+			@foreach (var game in playerGames)
+			{
+				<partial name="_GamePartial" model="@game" />
+			}
+		</div>
+	</div>
+}
+else
+{
+	<p class="text-center text-muted">这位选手最近没有比赛</p>
+}

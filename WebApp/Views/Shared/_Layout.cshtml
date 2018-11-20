@@ -47,8 +47,10 @@
 
 			<div id="main-navbar-content" class="navbar-collapse collapse">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">主页</a></li>
-
+					<li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Team1">队伍 1</a></li>
+					<li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Team2">队伍 2</a></li>
+					<li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Game">比赛列表</a></li>
+					<li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Result">成绩汇总</a></li>
 					<li class="nav-item dropdown" asp-authorize-policy="@Policies.Manage">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							管理

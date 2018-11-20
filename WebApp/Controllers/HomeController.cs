@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using SecretNest.TeamPlayer.Entity;
+using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 
 namespace WebApp.Controllers
@@ -20,35 +18,69 @@ namespace WebApp.Controllers
 		/// </summary>
 		private FacadeService FacadeService { get; }
 
+		[HttpGet]
 		public IActionResult Index()
 		{
 			var data = FacadeService.Facade.GetBasis();
 			return View(data);
 		}
 
-		public IActionResult About()
+		[HttpGet]
+		public IActionResult Team1()
 		{
-			ViewData["Message"] = "Your application description page.";
-
-			return View();
+			ViewBag.TeamSelection = TeamSelection.Team1;
+			return View("Team", FacadeService.Facade.GetTeam(TeamSelection.Team1));
 		}
 
-		public IActionResult Contact()
+		[HttpGet]
+		public IActionResult Team2()
 		{
-			ViewData["Message"] = "Your contact page.";
-
-			return View();
+			ViewBag.TeamSelection = TeamSelection.Team2;
+			return View("Team", FacadeService.Facade.GetTeam(TeamSelection.Team2));
 		}
 
-		public IActionResult Privacy()
+		[HttpGet]
+		public IActionResult Game(int round = 1)
 		{
-			return View();
+			ViewBag.Round = round;
+			var data = FacadeService.Facade.GetGamesByRound(round - 1);
+			return View(data);
 		}
+
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+		}
+
+		/// <summary>
+		/// 显示队员信息。
+		/// </summary>
+		/// <returns></returns>
+		public IActionResult Player(TeamSelection team, Guid id)
+		{
+			var player = FacadeService.Facade.GetPlayer(team, id);
+
+			if (player == null)
+			{
+				return NotFound();
+			}
+
+			ViewBag.Team = team;
+			ViewBag.PlayerId = id;
+			return View(player);
+		}
+
+		/// <summary>
+		/// 总成绩界面。
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet]
+		public IActionResult Result()
+		{
+			var data = FacadeService.Facade.GetScore();
+			return View(data);
 		}
 	}
 }

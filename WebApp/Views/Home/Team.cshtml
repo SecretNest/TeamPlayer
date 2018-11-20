@@ -1,0 +1,69 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using SecretNest.TeamPlayer.Entity
+@model SecretNest.TeamPlayer.Entity.Team
+@inject IViewLocalizer ViewLocalizer
+@inject FacadeService FacadeService
+@{
+	var teamSelection = (TeamSelection)ViewBag.TeamSelection;
+	ViewBag.Title = ViewLocalizer["队伍信息 - {0}", Model.Name];
+
+	var raceList = FacadeService.Facade.GetBasis().Races;
+}
+
+<div class="alert alert-info">下面的列表展示了队伍中的所有成员。</div>
+
+@if (Model.Players.Any())
+{
+	<table class="table table-hover table-striped">
+		<thead>
+			<tr>
+				<th>姓名</th>
+				<th>默认种族</th>
+				<th>最小出席限制</th>
+				<th>最大出席限制</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var (id, item) in Model.Players.OrderBy(i => i.Value.Name))
+			{
+				<tr>
+					<th><a asp-controller="Home" asp-action="Player" asp-route-team="@teamSelection" asp-route-id="@id">@item.Name</a></th>
+					<td>
+						@if (raceList.TryGetValue(item.DefaultRace, out var race))
+						{
+							<span>@race.Name</span>
+						}
+						else
+						{
+							<span class="text-muted">无</span>
+						}
+					</td>
+					<td>
+						@if (item.MinAttending != 0)
+						{
+							<span>@item.MinAttending</span>
+						}
+						else
+						{
+							<span class="text-muted">-</span>
+						}
+					</td>
+					<td>
+						@if (item.MaxAttending != 0)
+						{
+							<span>@item.MaxAttending</span>
+						}
+						else
+						{
+							<span class="text-muted">-</span>
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<p class="text-center text-muted">目前这个队伍还没有任何队员</p>
+}

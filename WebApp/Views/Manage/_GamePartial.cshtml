@@ -6,8 +6,9 @@
 @{
 	var raceList = new SelectList(FacadeService.Facade.GetBasis().Races, "Key", "Value.Name");
 	var mapList = new SelectList(FacadeService.Facade.GetMaps(), "Key", "Value.Name");
-	var team1 = FacadeService.Facade.GetTeam(TeamSelection.Team1).Players;
-	var team2 = FacadeService.Facade.GetTeam(TeamSelection.Team2).Players;
+
+	var team1 = FacadeService.Facade.GetTeam(TeamSelection.Team1);
+	var team2 = FacadeService.Facade.GetTeam(TeamSelection.Team2);
 	var emptyGuid = Guid.Empty;
 }
 
@@ -22,13 +23,13 @@
 		<div class="card-group mt-3">
 
 			<div class="card text-center">
-				<div class="card-header">队伍一</div>
+				<div class="card-header">@team1.Name</div>
 				<div class="card-body">
 					<div class="form-group">
 						<label asp-for="PlayerIds[TeamSelection.Team1]">选手</label>
 						<select class="form-control" asp-for="PlayerIds[TeamSelection.Team1]" onchange="changeDefaultRace(this)">
 							<option value="@emptyGuid" data-default-race="@emptyGuid">未选择</option>
-							@foreach (var item in team1)
+							@foreach (var item in team1.Players)
 							{
 								<option value="@item.Key" data-default-race="@item.Value.DefaultRace">@item.Value.Name</option>
 							}
@@ -62,13 +63,13 @@
 
 
 			<div class="card text-center">
-				<div class="card-header">队伍二</div>
+				<div class="card-header">@team2.Name</div>
 				<div class="card-body">
 					<div class="form-group">
 						<label asp-for="PlayerIds[TeamSelection.Team2]">选手</label>
 						<select class="form-control" asp-for="PlayerIds[TeamSelection.Team2]" onchange="changeDefaultRace(this)">
 							<option value="@emptyGuid" data-default-race="@emptyGuid">未选择</option>
-							@foreach (var item in team1)
+							@foreach (var item in team2.Players)
 							{
 								<option value="@item.Key" data-default-race="@item.Value.DefaultRace">@item.Value.Name</option>
 							}

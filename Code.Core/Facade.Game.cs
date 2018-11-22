@@ -178,9 +178,9 @@ namespace SecretNest.TeamPlayer
 
 		public bool SetGame(int roundIndex, int gameIndex, Game game, out string errorText)
 		{
-			if (game.GameTime != DateTime.MinValue && !game.IsTimeIncluded && game.GameTime.TimeOfDay != TimeSpan.Zero)
+			if (!game.IsTimeIncluded)
 			{
-				game.GameTime -= game.GameTime.TimeOfDay;
+				game.GameTime = game.GameTime.Date;
 			}
 
 			var round = dataFile.Games[roundIndex];

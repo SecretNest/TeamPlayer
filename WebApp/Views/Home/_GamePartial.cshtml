@@ -4,8 +4,8 @@
 @inject FacadeService FacadeService
 @inject IViewLocalizer ViewLocalizer
 @{
-	var team1 = FacadeService.Facade.GetTeam(TeamSelection.Team1).Players;
-	var team2 = FacadeService.Facade.GetTeam(TeamSelection.Team2).Players;
+	var team1 = FacadeService.Facade.GetTeam(TeamSelection.Team1);
+	var team2 = FacadeService.Facade.GetTeam(TeamSelection.Team2);
 	var races = FacadeService.Facade.GetBasis().Races;
 	var maps = FacadeService.Facade.GetMaps();
 	var emptyGuid = Guid.Empty;
@@ -17,12 +17,12 @@
 
 <div class="card-group mt-3">
 	<div class="card text-center">
-		<div class="card-header">队伍一</div>
+		<div class="card-header"><a asp-controller="Home" asp-action="Team" asp-route-team="Team1">@team1.Name</a></div>
 		<div class="card-body">
 			<div>
-				@if (team1.TryGetValue(Model.PlayerIds[TeamSelection.Team1], out var player1))
+				@if (team1.Players.TryGetValue(Model.PlayerIds[TeamSelection.Team1], out var player1))
 				{
-					<span>@player1.Name</span>
+					<span><a asp-controller="Home" asp-action="Player" asp-route-team="Team1" asp-route-id="@Model.PlayerIds[TeamSelection.Team1]">@player1.Name</a></span>
 				}
 				else
 				{
@@ -39,6 +39,18 @@
 					<span class="text-muted">暂无种族</span>
 				}
 			</div>
+
+			@if (Model.GameResult == GameResult.Team1Win)
+			{
+				<hr />
+				<h4><span class="badge badge-success">胜利</span></h4>
+			}
+			else if (Model.GameResult == GameResult.Team2Win)
+			{
+				<hr />
+				<h4><span class="badge badge-danger">失败</span></h4>
+
+			}
 		</div>
 
 	</div>
@@ -55,19 +67,47 @@
 					<span class="text-muted">暂无地图</span>
 				}
 			</div>
-			<div>@Model.GameResult.GetDisplayString()</div>
+			<div>
+				@if (Model.IsTimeIncluded)
+				{
+					<span>@Model.GameTime.ToString("G")</span>
+				}
+				else
+				{
+					<span class="text-muted">暂无时间</span>
+				}
+			</div>
+			<div>
+				@switch (Model.GameResult)
+				{
+					case GameResult.Team1Win:
+					case GameResult.Team2Win:
+						break;
+					case GameResult.InGame:
+						<h4><span class="badge badge-primary">正在比赛</span></h4>
+						break;
+					default:
+						<span>@Model.GameResult.GetDisplayString()</span>
+						break;
+				}
+			</div>
+
+			@if (!string.IsNullOrEmpty(Model.Description))
+			{
+				<p class="text-muted">@Model.Description</p>
+			}
 
 		</div>
 	</div>
 
 
 	<div class="card text-center">
-		<div class="card-header">队伍二</div>
+		<div class="card-header"><a asp-controller="Home" asp-action="Team" asp-route-team="Team2">@team2.Name</a></div>
 		<div class="card-body">
 			<div>
-				@if (team2.TryGetValue(Model.PlayerIds[TeamSelection.Team2], out var player2))
+				@if (team2.Players.TryGetValue(Model.PlayerIds[TeamSelection.Team2], out var player2))
 				{
-					<span>@player2.Name</span>
+					<span><a asp-controller="Home" asp-action="Player" asp-route-team="Team1" asp-route-id="@Model.PlayerIds[TeamSelection.Team2]">@player2.Name</a></span>
 				}
 				else
 				{
@@ -84,6 +124,19 @@
 					<span class="text-muted">暂无种族</span>
 				}
 			</div>
+
+			@if (Model.GameResult == GameResult.Team1Win)
+			{
+				<hr />
+				<h4><span class="badge badge-danger">失败</span></h4>
+			}
+			else if (Model.GameResult == GameResult.Team2Win)
+			{
+				<hr />
+				<h4><span class="badge badge-success">胜利</span></h4>
+
+			}
+
 		</div>
 	</div>
 </div>

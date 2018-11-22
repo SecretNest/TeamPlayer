@@ -5,7 +5,8 @@
 @inject FacadeService FacadeService
 @{
 
-	ViewBag.Title = ViewLocalizer["选手详情 - {0}", Model.Name];
+	ViewBag.Title = Model.Name;
+	ViewBag.PageTitle = ViewLocalizer["选手详情 - {0}", Model.Name];
 	var team = (TeamSelection)ViewBag.Team;
 	var playerId = (Guid)ViewBag.PlayerId;
 	var playerGames = FacadeService.Facade.GetGamesByPlayer(team, playerId);

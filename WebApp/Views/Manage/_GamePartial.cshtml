@@ -4,7 +4,7 @@
 @inject FacadeService FacadeService
 @inject IViewLocalizer ViewLocalizer
 @{
-	var raceList = new SelectList(FacadeService.Facade.GetBasis().Races, "Key", "Value.Name");
+	var raceList = new SelectList(FacadeService.Facade.GetRacesForGameSelection(), "Key", "Value.Name");
 	var mapList = new SelectList(FacadeService.Facade.GetMaps(), "Key", "Value.Name");
 
 	var team1 = FacadeService.Facade.GetTeam(TeamSelection.Team1);

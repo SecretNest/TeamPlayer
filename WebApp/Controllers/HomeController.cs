@@ -3,6 +3,7 @@ using SecretNest.TeamPlayer.Entity;
 using System;
 using System.Diagnostics;
 using WebApp.Models;
+using WebApp.Models.Home;
 
 namespace WebApp.Controllers
 {
@@ -25,19 +26,20 @@ namespace WebApp.Controllers
 			return View(data);
 		}
 
-		[HttpGet]
-		public IActionResult Team1()
+		[HttpGet("Home/Team/{team}")]
+		public IActionResult Team(TeamSelection team)
 		{
-			ViewBag.TeamSelection = TeamSelection.Team1;
-			return View("Team", FacadeService.Facade.GetTeam(TeamSelection.Team1));
+			ViewBag.TeamSelection = team;
+			return View("Team", FacadeService.Facade.GetTeam(team));
 		}
 
 		[HttpGet]
-		public IActionResult Team2()
+		public IActionResult Recent()
 		{
-			ViewBag.TeamSelection = TeamSelection.Team2;
-			return View("Team", FacadeService.Facade.GetTeam(TeamSelection.Team2));
+			FacadeService.Facade.GetGameForDisplaying(out var lastGame, out var currentGames);
+			return View(new RecentGameModel { LastGame = lastGame, CurrentGames = currentGames });
 		}
+
 
 		[HttpGet]
 		public IActionResult Game(int round = 1)

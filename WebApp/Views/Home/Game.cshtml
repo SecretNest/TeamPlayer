@@ -5,7 +5,8 @@
 @model IEnumerable<SecretNest.TeamPlayer.Entity.GameWithIndex>
 @{
 	var round = (int)ViewBag.Round;
-	ViewBag.Title = ViewLocalizer["比赛详情 - 第 {0} 轮", round];
+	ViewBag.Title = "比赛详情";
+	ViewBag.PageTitle = ViewLocalizer["比赛详情 - 第 {0} 轮", round];
 
 	// 轮次数目
 	var rounds = FacadeService.Facade.GetBasis().RoundCount;
@@ -33,7 +34,7 @@ else
 
 	<hr />
 
-	@if (Model.Any())
+	if (Model.Any())
 	{
 		<div>
 			@foreach (var game in Model)

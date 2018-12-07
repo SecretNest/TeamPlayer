@@ -39,7 +39,10 @@ else
 		<div>
 			@foreach (var game in Model)
 			{
-				<div class="card mt-3" id="@(game.GameIndex + 1)">
+				// 隐藏的定位点
+				<div id="@(game.GameIndex + 1)" style="position: relative; top: -4.5rem; visibility: hidden;"></div>
+
+				<div class="card mt-3">
 					<div class="card-body">
 						<partial name="_GamePartial" model="@game" />
 					</div>

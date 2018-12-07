@@ -4,7 +4,10 @@ using Sakura.AspNetCore;
 using SecretNest.TeamPlayer.Entity;
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
 using WebApp.Models;
+using WebApp.SignalR;
 
 namespace WebApp.Controllers
 {
@@ -14,10 +17,11 @@ namespace WebApp.Controllers
 	[Authorize(Policies.Manage)]
 	public class ManageController : Controller
 	{
-		public ManageController(FacadeService facadeService, IOperationMessageAccessor operationMessageAccessor)
+		public ManageController(FacadeService facadeService, IOperationMessageAccessor operationMessageAccessor, IHubContext<GameHub, IGameHubClient> gameHubContext)
 		{
 			FacadeService = facadeService;
 			OperationMessageAccessor = operationMessageAccessor;
+			GameHubContext = gameHubContext;
 		}
 
 		/// <summary>
@@ -29,6 +33,11 @@ namespace WebApp.Controllers
 		/// 消息服务。
 		/// </summary>
 		private IOperationMessageAccessor OperationMessageAccessor { get; }
+
+		/// <summary>
+		/// 集线器上下文对象。
+		/// </summary>
+		private IHubContext<GameHub, IGameHubClient> GameHubContext { get; }
 
 		/// <summary>
 		/// 显示管理基本信息界面。
@@ -235,7 +244,7 @@ namespace WebApp.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult UpdateResult(int roundIndex, int gameIndex, Game game)
+		public async Task<IActionResult> UpdateResult(int roundIndex, int gameIndex, Game game)
 		{
 			if (FacadeService.Facade.SetGame(roundIndex, gameIndex, game, out var error))
 			{
@@ -248,6 +257,8 @@ namespace WebApp.Controllers
 					string.Format(CultureInfo.CurrentUICulture, "第 {0} 轮第 {1} 场的比赛信息更新失败，原因：{2}", roundIndex + 1, gameIndex + 1, error));
 
 			}
+
+			await GameHubContext.Clients.All.RecentGameUpdated();
 
 			return RedirectToAction("Round", "Manage", new { round = roundIndex + 1 }, (gameIndex + 1).ToString("D"));
 		}

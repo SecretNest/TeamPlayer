@@ -43,12 +43,12 @@
 			@if (Model.GameResult == GameResult.Team1Win)
 			{
 				<hr />
-				<h4><span class="badge badge-success">胜利</span></h4>
+				<h3><span class="badge badge-success">胜利</span></h3>
 			}
 			else if (Model.GameResult == GameResult.Team2Win)
 			{
 				<hr />
-				<h4><span class="badge badge-danger">失败</span></h4>
+				<h3><span class="badge badge-danger">失败</span></h3>
 
 			}
 		</div>
@@ -68,9 +68,16 @@
 				}
 			</div>
 			<div>
-				@if (Model.IsTimeIncluded)
+				@if (Model.GameTime != DateTime.MinValue)
 				{
-					<span>@Model.GameTime.ToString("G")</span>
+					if (Model.IsTimeIncluded)
+					{
+						<span>@Model.GameTime.ToString("g")</span>
+					}
+					else
+					{
+						<span>@Model.GameTime.ToString("d")</span>
+					}
 				}
 				else
 				{
@@ -84,7 +91,7 @@
 					case GameResult.Team2Win:
 						break;
 					case GameResult.InGame:
-						<h4><span class="badge badge-primary">正在比赛</span></h4>
+						<h3><span class="badge badge-primary">正在比赛</span></h3>
 						break;
 					default:
 						<span>@Model.GameResult.GetDisplayString()</span>
@@ -128,12 +135,12 @@
 			@if (Model.GameResult == GameResult.Team1Win)
 			{
 				<hr />
-				<h4><span class="badge badge-danger">失败</span></h4>
+				<h3><span class="badge badge-danger">失败</span></h3>
 			}
 			else if (Model.GameResult == GameResult.Team2Win)
 			{
 				<hr />
-				<h4><span class="badge badge-success">胜利</span></h4>
+				<h3><span class="badge badge-success">胜利</span></h3>
 
 			}
 

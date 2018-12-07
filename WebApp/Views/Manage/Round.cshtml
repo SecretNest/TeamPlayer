@@ -16,8 +16,10 @@
 
 
 
-<div class="alert alert-info">本页面用于管理系统中所有记录比赛的结果。要开始，请首先选择一个轮次。<br />
-	<strong>注意：你每次只能更新一场比赛。保存单场比赛信息后，对其他场次的更改将被忽略。</strong></div>
+<div class="alert alert-info">
+	本页面用于管理系统中所有记录比赛的结果。要开始，请首先选择一个轮次。<br />
+	<strong>注意：你每次只能更新一场比赛。保存单场比赛信息后，对其他场次的更改将被忽略。</strong>
+</div>
 
 
 @if (rounds == 0)
@@ -32,27 +34,46 @@ else
 
 	<hr />
 
-@if (Model.Any())
- {
-	 <div>
-		 @foreach (var game in Model)
-		 {
-			 <div class="card mt-3">
-				 <div class="card-body">
-					 <partial name="_GamePartial" model="@game"/>
-				 </div>
-			 </div>
-		 }
-	 </div>
- }
- else
- {
-	 <p class="text-muted text-center">没有找到本轮次的任何比赛信息。请检查轮次设定是否正确或者重新生成轮次。</p>
- }
+	if (Model.Any())
+	{
+		<div>
+			@foreach (var game in Model)
+			{
+				<div class="card mt-3" id="@(game.GameIndex + 1)">
+					<div class="card-body">
+						<partial name="_GamePartial" model="@game" />
+					</div>
+				</div>
+			}
+		</div>
+	}
+	else
+	{
+		<p class="text-muted text-center">没有找到本轮次的任何比赛信息。请检查轮次设定是否正确或者重新生成轮次。</p>
+	}
+
+}
+
+@section Header{
+
+
+	<environment include="Development">
+		<link rel="stylesheet" href="~/lib/jquery-datetimepicker/jquery.datetimepicker.css" />
+	</environment>
+	<environment exclude="Development">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
+			  integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous"
+			  asp-fallback-test-class=".xdsoft_datetimepicker"
+			  asp-fallback-test-property="display"
+			  asp-fallback-test-value="none"
+			  asp-fallback-href="~/lib/jquery-datetimepicker/jquery.datetimepicker.min.css" />
+	</environment>
 
 }
 
 @section Scripts{
+
+	<partial name="_DateTimePickerPartial" />
 
 	<script>
 
@@ -60,6 +81,12 @@ else
 			var raceSelector = $(ele).closest('.form-group').next().find('select');
 			var defaultRace = $(':selected', ele).data('default-race');
 			raceSelector.val(defaultRace);
+		}
+
+		function setCurrentTime(ele) {
+
+			var inputEle = $(ele).closest('.form-group').find('input');
+			$(inputEle).val(moment().format('YYYY/MM/DD hh:mm'));
 		}
 
 	</script>

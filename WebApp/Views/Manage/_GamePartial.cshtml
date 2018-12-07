@@ -58,6 +58,24 @@
 						<select asp-enum-for="GameResult" asp-text-source="Name" class="form-control"></select>
 					</div>
 
+					<div class="form-group">
+						<label asp-for="GameTime">比赛时间</label>
+						<div class="input-group">
+							<input asp-for="GameTime" asp-format="{0:yyyy/MM/dd HH:mm}" type="text" class="form-control datetimepicker" />
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary" type="button" onclick="setCurrentTime(this);">设为现在</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="form-check">
+							<label class="col-form-label">
+								<input type="checkbox" asp-for="IsTimeIncluded" class="form-check-input" /> 显示时间部分
+							</label>
+						</div>
+					</div>
+
 				</div>
 			</div>
 

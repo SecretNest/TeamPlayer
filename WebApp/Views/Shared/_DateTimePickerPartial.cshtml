@@ -1,0 +1,23 @@
+﻿<environment include="Development">
+	<script src="~/lib/jquery-datetimepicker/jquery.datetimepicker.full.js"></script>
+	<script src="~/lib/moment.js/moment.js"></script>
+</environment>
+<environment exclude="Development">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
+			integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk="
+			crossorigin="anonymous"
+			asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.datetimepicker"
+			asp-fallback-src="~/lib/jquery-datetimepicker/jquery.datetimepicker.full.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js" 
+	        integrity="sha256-CutOzxCRucUsn6C6TcEYsauvvYilEniTXldPa6/wu0k="
+	        crossorigin="anonymous"
+	        asp-fallback-test="window.moment"
+	        asp-fallback-src="~/lib/moment.js/moment.min.js"></script>
+</environment>
+
+<script>
+
+	$.datetimepicker.setLocale('zh');
+	$('.datetimepicker').datetimepicker();;
+
+</script>

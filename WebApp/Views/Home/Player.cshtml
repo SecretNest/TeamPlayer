@@ -68,12 +68,14 @@
 @if (playerGames.Any())
 {
 	<div>
-		<div class="mt-3">
-			@foreach (var game in playerGames)
-			{
-				<partial name="_GamePartial" model="@game" />
-			}
-		</div>
+		@foreach (var game in playerGames)
+		{
+			<div class="card mt-3">
+				<div class="card-body">
+					<partial name="_GamePartial" model="@game" />
+				</div>
+			</div>
+		}
 	</div>
 }
 else

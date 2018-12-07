@@ -249,7 +249,7 @@ namespace WebApp.Controllers
 
 			}
 
-			return RedirectToAction("Round", "Manage", new { round = roundIndex + 1 });
+			return RedirectToAction("Round", "Manage", new { round = roundIndex + 1 }, (gameIndex + 1).ToString("D"));
 		}
 	}
 }

@@ -17,16 +17,38 @@
 
 @if (Model.CurrentGames.Any())
 {
-	<div class="list-group">
-		@foreach (var item in Model.CurrentGames)
-		{
-			<a class="list-group-item list-group-item-action" href="#">
+	foreach (var item in Model.CurrentGames)
+	{
+		<div class="card mt-3">
+			<div class="card-body">
 				<partial name="_GamePartial" model="@item" />
-			</a>
-		}
-	</div>
+			</div>
+		</div>
+	}
 }
 else
 {
 	<p class="text-center text-muted">目前没有正在进行中的比赛。请时刻关注比赛时刻安排。</p>
+}
+
+@section Scripts{
+
+	<partial name="_SignalRPartial" />
+
+	<script>
+
+		var connection =
+			new signalR.HubConnectionBuilder()
+				.withUrl('/signalr/game')
+				.build();
+
+		connection.on('RecentGameUpdated',
+			function () {
+				location.reload(true);
+			});
+
+		connection.start();
+
+	</script>
+
 }

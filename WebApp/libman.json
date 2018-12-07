@@ -29,6 +29,14 @@
 		{
 			"library": "vue@2.5.17",
 			"destination": "wwwroot/lib/vue/"
+		},
+		{
+			"library": "jquery-datetimepicker@2.5.20",
+			"destination": "wwwroot/lib/jquery-datetimepicker/"
+		},
+		{
+			"library": "moment.js@2.22.2",
+			"destination": "wwwroot/lib/moment.js/"
 		}
 	]
 }

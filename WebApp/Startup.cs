@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Framework.DependencyInjection;
 using Sakura.AspNetCore.Mvc;
+using WebApp.SignalR;
 
 namespace WebApp
 {
@@ -69,6 +70,9 @@ namespace WebApp
 						options.Cookie.SecurePolicy = CookieSecurePolicy.None;
 					});
 
+			// SignalR
+			services.AddSignalR();
+
 			// 设置
 			services.Configure<AppSetting>(Configuration.GetSection("AppSetting"));
 
@@ -110,6 +114,9 @@ namespace WebApp
 			//app.UseCookiePolicy();
 			app.UseAuthentication();
 			app.UseSession();
+
+			app.UseSignalR(builder => { builder.MapHub<GameHub>("/signalr/game"); });
+
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute(

@@ -48,12 +48,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var p in Model.Players)
+			@foreach (var p in Model.Players.OrderBy(i => i.Team).ThenBy(i => i.Name))
 			{
 				<tr>
-					<th>@p.Name</th>
+					<th><a asp-controller="Home" asp-action="Player" asp-route-team="@p.Team" asp-route-id="@p.Id">@p.Name</a></th>
 					<td>
-						@Model.TeamName[p.Team]
+						<a asp-controller="Home" asp-action="Team" asp-route-team="@p.Team">@Model.TeamName[p.Team]</a>
 					</td>
 					<td>
 						@p.Played
@@ -76,7 +76,7 @@
 
 						@if (p.PlayedBelowMinAttending != 0)
 						{
-							<span class="text-danger">@ViewLocalizer["（缺 {0} 场）",p.PlayedBelowMinAttending]</span>
+							<span class="text-danger">@ViewLocalizer["（缺 {0} 场）", p.PlayedBelowMinAttending]</span>
 						}
 					</td>
 					<td>

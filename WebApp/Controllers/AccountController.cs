@@ -51,6 +51,13 @@ namespace WebApp.Controllers
 					var identity = new ClaimsIdentity(claims, IdentityConstants.ApplicationScheme, ClaimTypes.Name, ClaimTypes.Role);
 					var principal = new ClaimsPrincipal(identity);
 					await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
+
+					if (!Url.IsLocalUrl(returnUrl))
+					{
+						returnUrl = Url.Action("Index", "Home");
+					}
+
+					return Redirect(returnUrl);
 				}
 			}
 

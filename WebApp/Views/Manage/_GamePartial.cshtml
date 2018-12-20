@@ -31,7 +31,7 @@
 							<option value="@emptyGuid" data-default-race="@emptyGuid">未选择</option>
 							@foreach (var item in team1.Players)
 							{
-								<option value="@item.Key" data-default-race="@item.Value.DefaultRace">@item.Value.Name</option>
+								<option value="@item.Key" data-default-race="@FacadeService.Facade.GetRaceForGameConvertingFromPlayerDefault(item.Value.DefaultRace).Key">@item.Value.Name</option>
 							}
 						</select>
 					</div>
@@ -89,7 +89,7 @@
 							<option value="@emptyGuid" data-default-race="@emptyGuid">未选择</option>
 							@foreach (var item in team2.Players)
 							{
-								<option value="@item.Key" data-default-race="@item.Value.DefaultRace">@item.Value.Name</option>
+								<option value="@item.Key" data-default-race="@FacadeService.Facade.GetRaceForGameConvertingFromPlayerDefault(item.Value.DefaultRace).Key">@item.Value.Name</option>
 							}
 						</select>
 					</div>

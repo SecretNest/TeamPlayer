@@ -114,7 +114,7 @@
 			<div>
 				@if (team2.Players.TryGetValue(Model.PlayerIds[TeamSelection.Team2], out var player2))
 				{
-					<span><a asp-controller="Home" asp-action="Player" asp-route-team="Team1" asp-route-id="@Model.PlayerIds[TeamSelection.Team2]">@player2.Name</a></span>
+					<span><a asp-controller="Home" asp-action="Player" asp-route-team="Team2" asp-route-id="@Model.PlayerIds[TeamSelection.Team2]">@player2.Name</a></span>
 				}
 				else
 				{

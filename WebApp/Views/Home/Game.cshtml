@@ -5,8 +5,8 @@
 @model IEnumerable<SecretNest.TeamPlayer.Entity.GameWithIndex>
 @{
 	var round = (int)ViewBag.Round;
-	ViewBag.Title = "比赛详情";
-	ViewBag.PageTitle = ViewLocalizer["比赛详情 - 第 {0} 轮", round];
+	ViewBag.Title = "比赛列表";
+	ViewBag.PageTitle = ViewLocalizer["比赛列表 - 第 {0} 轮", round];
 
 	// 轮次数目
 	var rounds = FacadeService.Facade.GetBasis().RoundCount;

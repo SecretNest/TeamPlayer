@@ -8,7 +8,12 @@
 {
 	<h2 class="text-center lead">上一场结果</h2>
 	<hr />
-	<partial name="_GamePartial" model="@Model.LastGame" />
+	<div class="card mt-3">
+		<div class="card-body">
+			<partial name="_GamePartial" model="@Model.LastGame" />
+		</div>
+	</div>
+
 	<hr />
 }
 

@@ -63,8 +63,10 @@ namespace SecretNest.TeamPlayer.Entity
 		//未就绪（默认）
 		[Display(Name = "尚未开始")]
 		NotStarted = 0,
-		//进行中
-		[Display(Name = "正在进行")]
+        [Display(Name = "即将开始")]
+        Starting = 2,
+        //进行中
+        [Display(Name = "正在进行")]
 		InGame = 1,
 		[Display(Name = "队伍一胜")]
 		Team1Win,

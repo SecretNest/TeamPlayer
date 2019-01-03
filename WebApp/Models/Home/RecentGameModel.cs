@@ -7,5 +7,7 @@ namespace WebApp.Models.Home
 	{
 		public GameWithIndex LastGame { get; set; }
 		public IEnumerable<GameWithIndex> CurrentGames { get; set; }
+
+		public IEnumerable<GameWithIndex> NextGames { get; set; }
 	}
 }

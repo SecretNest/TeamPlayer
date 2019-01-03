@@ -36,8 +36,8 @@ namespace WebApp.Controllers
 		[HttpGet]
 		public IActionResult Recent()
 		{
-			FacadeService.Facade.GetGameForDisplaying(out var lastGame, out var currentGames);
-			return View(new RecentGameModel { LastGame = lastGame, CurrentGames = currentGames });
+			FacadeService.Facade.GetGameForDisplaying(out var lastGame, out var currentGames, out var nextGames);
+			return View(new RecentGameModel { LastGame = lastGame, CurrentGames = currentGames, NextGames = nextGames });
 		}
 
 

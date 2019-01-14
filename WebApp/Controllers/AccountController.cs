@@ -59,6 +59,8 @@ namespace WebApp.Controllers
 
 					return Redirect(returnUrl);
 				}
+
+				ModelState.AddModelError("", "登录失败，用户名或密码不正确。");
 			}
 
 			return View(model);

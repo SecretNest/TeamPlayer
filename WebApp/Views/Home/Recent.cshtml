@@ -8,7 +8,12 @@
 {
 	<h2 class="text-center lead">上一场结果</h2>
 	<hr />
-	<partial name="_GamePartial" model="@Model.LastGame" />
+	<div class="card mt-3">
+		<div class="card-body">
+			<partial name="_GamePartial" model="@Model.LastGame" />
+		</div>
+	</div>
+
 	<hr />
 }
 
@@ -29,6 +34,26 @@
 else
 {
 	<p class="text-center text-muted">目前没有正在进行中的比赛。请时刻关注比赛时刻安排。</p>
+}
+
+<hr />
+<h2 class="text-center lead">即将进行</h2>
+<hr />
+
+@if (Model.NextGames.Any())
+{
+	foreach (var item in Model.NextGames)
+	{
+		<div class="card mt-3">
+			<div class="card-body">
+				<partial name="_GamePartial" model="@item" />
+			</div>
+		</div>
+	}
+}
+else
+{
+	<p class="text-center text-muted">目前没有即将进行的比赛。请时刻关注比赛时刻安排。</p>
 }
 
 @section Scripts{

@@ -170,10 +170,11 @@ namespace SecretNest.TeamPlayer
 			return match;
 		}
 
-		public void GetGameForDisplaying(out GameWithIndex latestFinishedGame, out List<GameWithIndex> playingGames)
+		public void GetGameForDisplaying(out GameWithIndex latestFinishedGame, out List<GameWithIndex> playingGames, out List<GameWithIndex> nextGames)
 		{
 			latestFinishedGame = GetLatestFinishedGame();
 			playingGames = GetGamesByResults(GameResult.InGame);
+            nextGames = GetGamesByResults(GameResult.Starting);
 		}
 
 		public bool SetGame(int roundIndex, int gameIndex, Game game, out string errorText)

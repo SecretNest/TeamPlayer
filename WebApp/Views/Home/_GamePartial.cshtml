@@ -98,12 +98,6 @@
 						break;
 				}
 			</div>
-
-			@if (!string.IsNullOrEmpty(Model.Description))
-			{
-				<p class="text-muted">@Model.Description</p>
-			}
-
 		</div>
 	</div>
 
@@ -150,5 +144,5 @@
 
 @if (!string.IsNullOrEmpty(Model.Description))
 {
-	<p class="text-muted">@Model.Description</p>
+	<p class="text-muted m-3">@Model.Description</p>
 }

@@ -162,7 +162,11 @@ else
 												</h4>
 											}
 										</td>
-										<th style="width: 10%; ">@ViewLocalizer["第 {0} 场", game.Index + 1]</th>
+										<th style="width: 10%;">
+											<a asp-controller="Home" asp-action="Game" asp-route-round="@(round.Index + 1)" asp-fragment="@(game.Index + 1)">
+												@ViewLocalizer["第 {0} 场", game.Index + 1]
+											</a>
+										</th>
 
 										<td style="width: 10%; text-align: left;">
 											@if (game.Winner == TeamSelection.Team2)

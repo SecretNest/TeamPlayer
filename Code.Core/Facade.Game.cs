@@ -187,39 +187,39 @@ namespace SecretNest.TeamPlayer
 			var round = dataFile.Games[roundIndex];
 
 			var player = game.PlayerIds[TeamSelection.Team1];
-			if (player != Guid.Empty)
-			{
-				for (var g = 0; g < dataFile.Basis.GameCount; g++)
-				{
-					if (g == gameIndex)
-					{
-						continue;
-					}
-
-					if (round[g].PlayerIds[TeamSelection.Team1] == player)
-					{
-						errorText = "队伍1选手在本轮已经参加过比赛。";
-						return false;
-					}
-				}
-			}
-			player = game.PlayerIds[TeamSelection.Team2];
-			if (player != Guid.Empty)
-			{
-				for (var g = 0; g < dataFile.Basis.GameCount; g++)
-				{
-					if (g == gameIndex)
-					{
-						continue;
-					}
-
-					if (round[g].PlayerIds[TeamSelection.Team2] == player)
-					{
-						errorText = "队伍2选手在本轮已经参加过比赛。";
-						return false;
-					}
-				}
-			}
+			//if (player != Guid.Empty)
+			//{
+			//	for (var g = 0; g < dataFile.Basis.GameCount; g++)
+			//	{
+			//		if (g == gameIndex)
+			//		{
+			//			continue;
+			//		}
+//
+			//		if (round[g].PlayerIds[TeamSelection.Team1] == player)
+			//		{
+			//			errorText = "队伍1选手在本轮已经参加过比赛。";
+			//			return false;
+			//		}
+			//	}
+			//}
+			//player = game.PlayerIds[TeamSelection.Team2];
+			//if (player != Guid.Empty)
+			//{
+			//	for (var g = 0; g < dataFile.Basis.GameCount; g++)
+			//	{
+			//		if (g == gameIndex)
+			//		{
+			//			continue;
+			//		}
+//
+			//		if (round[g].PlayerIds[TeamSelection.Team2] == player)
+			//		{
+			//			errorText = "队伍2选手在本轮已经参加过比赛。";
+			//			return false;
+			//		}
+			//	}
+			//}
 
 			dataFile.Games[roundIndex][gameIndex] = game;
 			Save();

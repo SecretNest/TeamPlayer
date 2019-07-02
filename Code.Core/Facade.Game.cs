@@ -184,9 +184,9 @@ namespace SecretNest.TeamPlayer
 				game.GameTime = game.GameTime.Date;
 			}
 
-			var round = dataFile.Games[roundIndex];
+			//var round = dataFile.Games[roundIndex];
 
-			var player = game.PlayerIds[TeamSelection.Team1];
+			//var player = game.PlayerIds[TeamSelection.Team1];
 			//if (player != Guid.Empty)
 			//{
 			//	for (var g = 0; g < dataFile.Basis.GameCount; g++)

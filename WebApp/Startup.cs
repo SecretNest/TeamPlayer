@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Framework.DependencyInjection;
 using Sakura.AspNetCore.Mvc;
 using WebApp.SignalR;
@@ -48,7 +49,8 @@ namespace WebApp
 			});
 
 
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+			services.AddControllersWithViews()
+				.SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
 				.AddViewLocalization()
 				.AddDataAnnotationsLocalization();
 
@@ -96,7 +98,7 @@ namespace WebApp
 		/// <param name="app">应用程序对象。</param>
 		/// <param name="env">应用程序宿主环境。</param>
 		[UsedImplicitly]
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
 			{
@@ -111,17 +113,17 @@ namespace WebApp
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
-			//app.UseCookiePolicy();
-			app.UseAuthentication();
 			app.UseSession();
 
-			app.UseSignalR(builder => { builder.MapHub<GameHub>("/signalr/game"); });
+			app.UseRouting();
 
-			app.UseMvc(routes =>
+			app.UseAuthentication();
+			app.UseAuthorization();
+
+			app.UseEndpoints(endpoints =>
 			{
-				routes.MapRoute(
-					name: "default",
-					template: "{controller=Home}/{action=Index}/{id?}");
+				endpoints.MapHub<GameHub>("/signalr/game");
+				endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 			});
 		}
 	}

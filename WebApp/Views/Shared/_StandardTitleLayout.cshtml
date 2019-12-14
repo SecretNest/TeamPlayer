@@ -3,10 +3,6 @@
 @inject IOperationMessageAccessor MessageAccessor
 @{
 	Layout = "_Layout";
-
-	var service = this.Context.RequestServices.GetService<ITempDataProvider>();
-	var messages = MessageAccessor.Messages;
-	var x = 1;
 }
 
 <div asp-message-list="AlertDialogClosable"></div>
